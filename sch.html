@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Government Scholarships Portal</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #F0F9FF 0%, #CCE2FE 100%);
+            min-height: 100vh;
+          
+        }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(30, 64, 175, 0.1); }
+        .header { 
+            background: linear-gradient(135deg,#3352B7);
+            color: white; padding: 40px; text-align: center;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.2rem; opacity: 0.9; }
+        .nav-tabs { display: flex; background: #F0F9FF; }
+        .tab-button { 
+            flex: 1; padding: 15px; background: none; border: none;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            color: #1E40AF; transition: all 0.3s ease;
+        }
+        .tab-button.active { background: white; color: #1E40AF; border-bottom: 3px solid #1E40AF; }
+        .tab-button:hover:not(.active) { background: #CCE2FE; }
+        .tab-content { display: none; padding: 30px; }
+        .tab-content.active { display: block; }
+        .section-title { text-align: center; color: #1E40AF; margin-bottom: 25px; font-size: 1.8rem; }
+        .scholarship-grid { display: grid; gap: 20px; }
+        .scholarship-card { 
+            background: white; border: 2px solid #CCE2FE; border-radius: 12px;
+            padding: 20px; transition: all 0.3s ease; position: relative;
+        }
+        .scholarship-card::before {
+            content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+            width: 4px; background: #1E40AF; border-radius: 2px 0 0 2px;
+        }
+        .scholarship-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(30, 64, 175, 0.15); border-color: #1E40AF; }
+        .scholarship-title { font-size: 1.3rem; font-weight: 700; color: #1E40AF; margin-bottom: 8px; }
+        .scholarship-description { color: #3352B7; margin-bottom: 12px; line-height: 1.5; }
+        .scholarship-details { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .detail-tag { 
+            background: linear-gradient(135deg, #F0F9FF);
+            color:#3352B7; padding: 4px 10px; border-radius: 15px; font-size: 0.8rem;
+        }
+        .apply-button { 
+            display: inline-block; background: linear-gradient(135deg, #F0F9FF);
+            color: #3352B7; padding: 10px 20px; border-radius: 25px;
+            text-decoration: none; font-weight: 600; transition: all 0.3s ease;
+        }
+        .apply-button:hover { 
+            background: linear-gradient(135deg, #CCE2FE, #1E40AF);
+            transform: translateY(-2px); text-decoration: none; color: white;
+        }
+        .important-links { 
+            background: linear-gradient(135deg, #1E40AF 0%, #CCE2FE 100%);
+            color: white; padding: 25px; border-radius: 15px; margin: 25px 0;
+        }
+        .links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 15px; }
+        .link-card { background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 10px; }
+        .link-card a { color: white; text-decoration: none; font-weight: 600; }
+        .instructions { background: #F0F9FF; padding: 20px; border-radius: 10px; border-left: 4px solid #1E40AF; }
+        .instructions h3 { color: #1E40AF; margin-bottom: 10px; }
+        .instructions ul { color: #555; line-height: 1.6; padding-left: 20px; }
+        .footer { background: #1E40AF; color: white; text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 India Government Scholarships Portal</h1>
+            <p>Complete Guide to Government Scholarships for Students</p>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-button active" onclick="showTab('class10')">Class 10th</button>
+            <button class="tab-button" onclick="showTab('class12')">Class 12th</button>
+            <button class="tab-button" onclick="showTab('college')">College</button>
+            <button class="tab-button" onclick="showTab('general')">General Info</button>
+        </div>
+
+        <div id="class10" class="tab-content active">
+            <h2 class="section-title">Class 10th Government Scholarships</h2>
+            <div class="scholarship-grid">
+                <div class="scholarship-card">
+                    <div class="scholarship-title">National Means-cum-Merit Scholarship (NMMS)</div>
+                    <div class="scholarship-description">Merit-based scholarship for Class IX students in government schools. Selected students receive ₹12,000 per year for classes XI-XII.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">₹12,000/year</span>
+                        <span class="detail-tag">Merit Based</span>
+                        <span class="detail-tag">Class IX</span>
+                    </div>
+                    <a class="apply-button" href="https://scholarships.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+                
+                <div class="scholarship-card">
+                    <div class="scholarship-title">Pre-Matric Scholarship for SC Students</div>
+                    <div class="scholarship-description">For SC students in classes IX-X with family income not exceeding ₹2.5 lakh. Covers tuition fee and maintenance allowance.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">Tuition + Maintenance</span>
+                        <span class="detail-tag">SC Students</span>
+                        <span class="detail-tag">Income ≤ ₹2.5L</span>
+                    </div>
+                    <a class="apply-button" href="https://scholarships.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+                
+                <div class="scholarship-card">
+                    <div class="scholarship-title">Pre-Matric Scholarship for ST Students</div>
+                    <div class="scholarship-description">For ST students in classes IX-X with family income up to ₹2.5 lakh annually. Provides maintenance allowance.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">Maintenance</span>
+                        <span class="detail-tag">ST Students</span>
+                        <span class="detail-tag">Income ≤ ₹2.5L</span>
+                    </div>
+                    <a class="apply-button" href="https://scholarships.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="class12" class="tab-content">
+            <h2 class="section-title">Class 12th Government Scholarships</h2>
+            <div class="scholarship-grid">
+                <div class="scholarship-card">
+                    <div class="scholarship-title">INSPIRE Scholarship (SHE)</div>
+                    <div class="scholarship-description">For top 1% students in Class XII pursuing Science. Provides ₹80,000 per year + ₹20,000 research fee.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">₹80K + ₹20K</span>
+                        <span class="detail-tag">Top 1%</span>
+                        <span class="detail-tag">Science</span>
+                    </div>
+                    <a class="apply-button" href="https://online-inspire.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+                
+                <div class="scholarship-card">
+                    <div class="scholarship-title">Post-Matric Scholarship for SC Students</div>
+                    <div class="scholarship-description">For SC students pursuing higher studies after Class X with family income up to ₹2.5 lakh.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">Full Support</span>
+                        <span class="detail-tag">SC Students</span>
+                        <span class="detail-tag">Post Class X</span>
+                    </div>
+                    <a class="apply-button" href="https://scholarships.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="college" class="tab-content">
+            <h2 class="section-title">College Government Scholarships</h2>
+            <div class="scholarship-grid">
+                <div class="scholarship-card">
+                    <div class="scholarship-title">Central Sector Scholarship</div>
+                    <div class="scholarship-description">For students securing admission through JEE/NEET/CLAT with family income ≤ ₹8 lakh. Provides ₹20,000/year.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">₹20K/year</span>
+                        <span class="detail-tag">Entrance Based</span>
+                        <span class="detail-tag">Income ≤ ₹8L</span>
+                    </div>
+                    <a class="apply-button" href="https://scholarships.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+                
+                <div class="scholarship-card">
+                    <div class="scholarship-title">AICTE PRAGATI Scholarship</div>
+                    <div class="scholarship-description">For girl students in technical education. Covers tuition fee up to ₹30,000 + ₹2,000 incidental charges.</div>
+                    <div class="scholarship-details">
+                        <span class="detail-tag">₹30K + ₹2K</span>
+                        <span class="detail-tag">Girl Students</span>
+                        <span class="detail-tag">Technical</span>
+                    </div>
+                    <a class="apply-button" href="https://scholarships.gov.in/" target="_blank">Click Here to Register</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="general" class="tab-content">
+            <h2 class="section-title">Application Process & Important Links</h2>
+            
+            <div class="instructions">
+                <h3>How to Apply</h3>
+                <ul>
+                    <li>Visit scholarships.gov.in and create account</li>
+                    <li>Fill profile with accurate information</li>
+                    <li>Check eligibility criteria carefully</li>
+                    <li>Upload required documents (Aadhaar, Income Certificate, etc.)</li>
+                    <li>Submit before deadline and save application ID</li>
+                </ul>
+            </div>
+
+            <div class="important-links">
+                <h3>Important Portals</h3>
+                <div class="links-grid">
+                    <div class="link-card">
+                        <a href="https://scholarships.gov.in/" target="_blank">National Scholarship Portal</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="https://online-inspire.gov.in/" target="_blank">INSPIRE Scholarship</a>
+                    </div>
+                    <div class="link-card">
+                        <a href="https://www.ugc.ac.in/scheme/" target="_blank">UGC Scholarships</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 India Government Scholarships Portal • Built to Help Students</p>
+        </div>
+    </div>
+
+    <script>
+        function showTab(id) {
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareerPath - SPA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav
+        class="h-[80px] bg-[#f0f9ff] border-b border-gray-200 flex items-center justify-between px-8 relative shadow-sm">
+        <!-- Left Side - Logo and CareerPath -->
+        <aside class="flex h-full items-center gap-3">
+            <!-- Logo placeholder (you can replace with actual logo) -->
+            <div class="w-12 h-12 bg-[#1e40af] rounded-lg flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+                </svg>
+            </div>
+            <div class="font-bold text-3xl flex items-center text-[#1e40af]">
+                CareerPath
+            </div>
+        </aside>
+
+        <!-- Middle - Navigation Links -->
+        <div class="flex items-center gap-8 text-lg font-medium text-gray-700">
+            <button onclick="router.navigateTo('home')" class="text-[#1E40AF] hover:underline transition font-semibold">
+                Home
+            </button>
+
+            <!-- Services Button with Dropdown -->
+            <div class="relative">
+                <button id="servicesBtn"
+                    class="text-[#1E40AF] hover:underline transition font-semibold flex items-center gap-1">
+                    Services
+                    <svg id="servicesIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        class="transition-transform duration-200">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+
+                <!-- Services Dropdown Content -->
+                <div id="servicesDropdown"
+                    class="absolute top-full left-0 mt-2 w-[300px] bg-[#f0f9ff] rounded-xl shadow-2xl border border-gray-100 p-6 z-50 hidden">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Our Services</h3>
+                        <div class="w-12 h-1 bg-[#1e40af] mx-auto rounded-full"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <a href="#" onclick="router.navigateTo('quiz')"
+                            class="block p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-[#1e40af] transition">
+                            <div class="font-semibold">Career Quiz</div>
+                            <div class="text-sm text-gray-500">
+                                Discover your ideal career path
+                            </div>
+                        </a>
+                        <a href="#" onclick="router.navigateTo('courses')"
+                            class="block p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-[#1e40af] transition">
+                            <div class="font-semibold">Courses</div>
+                            <div class="text-sm text-gray-500">
+                                Professional skill development
+                            </div>
+                        </a>
+                        <a href="#" onclick="router.navigateTo('competitive')"
+                            class="block p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-[#1e40af] transition">
+                            <div class="font-semibold">Competitive Exams</div>
+                            <div class="text-sm text-gray-500">
+                                Get personalized exam guidance
+                            </div>
+                        </a>
+                        <a href="#" onclick="router.navigateTo('sch')"
+                            class="block p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-[#1e40af] transition">
+                            <div class="font-semibold">Scholarship</div>
+                            <div class="text-sm text-gray-500">
+                                Find government and private scholarships
+                            </div>
+                        </a>
+                        <a href="#" onclick="router.navigateTo('tutor')"
+                            class="block p-3 rounded-lg hover:bg-blue-50 text-gray-700 hover:text-[#1e40af] transition">
+                            <div class="font-semibold">Tutor</div>
+                            <div class="text-sm text-gray-500">
+                                Connect with volunteer tutors
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Button -->
+            <button onclick="router.navigateTo('about')"
+                class="text-[#1E40AF] hover:underline transition font-semibold">
+                About
+            </button>
+
+            <!-- Contact Button with Dropdown -->
+            <div class="relative">
+                <button id="contactBtn"
+                    class="text-[#1E40AF] hover:underline transition font-semibold flex items-center gap-1">
+                    Contact
+                    <svg id="contactIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                        class="transition-transform duration-200">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="2" d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+
+                <!-- Contact Dropdown Content -->
+                <div id="contactDropdown"
+                    class="absolute top-full right-0 mt-2 w-[500px] max-w-[90vw] bg-[#f0f9ff] rounded-xl shadow-2xl border border-gray-100 p-8 z-50 hidden">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">
+                            Get in Touch
+                        </h3>
+                        <div class="w-16 h-1 bg-[#1e40af] mx-auto rounded-full"></div>
+                    </div>
+                    <div class="text-gray-700 leading-relaxed space-y-4 text-base">
+                        <div class="flex items-center gap-3">
+                            <span class="text-[#1e40af]">📧</span>
+                            <span>careerpath@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[#1e40af]">📞</span>
+                            <span>+91 12345 67890</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="text-[#1e40af]">📍</span>
+                            <span>Chennai, Tamil Nadu, India</span>
+                        </div>
+                        <div class="pt-4 border-t">
+                            <p class="text-center text-sm text-gray-600">
+                                Have questions about your career path? We're here to help!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login and Profile -->
+        <aside class="flex items-center gap-4">
+            <button id="loginNavBtn" onclick="router.navigateTo('login')"
+                class="bg-[#1e40af] text-white px-6 py-2 rounded-lg hover:bg-[#1e40af]/90 transition font-semibold">
+                Login
+            </button>
+
+            <!-- Profile Avatar + Dropdown -->
+            <div class="relative inline-block">
+                <!-- Avatar -->
+                <div id="profileBtn"
+                    class="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="w-7 h-7 text-gray-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A9.966 9.966 0 0112 15c2.21 0 4.236.72 5.879 1.926M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </div>
+
+                <!-- Ultra Professional Dropdown Menu (Google/LinkedIn Style) -->
+                <div id="profileDropdown"
+                    class="hidden absolute right-0 mt-3 w-[380px] bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-gray-100 overflow-hidden z-50 animate-slideIn">
+
+                    <!-- Profile Card Section -->
+                    <div class="px-6 py-6 border-b border-gray-100">
+                        <div class="flex items-start space-x-4">
+                            <!-- Profile Picture -->
+                            <div class="relative flex-shrink-0">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-md ring-2 ring-white">
+                                    <span class="text-white text-2xl font-bold" id="userInitial">J</span>
+                                </div>
+                                <div
+                                    class="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white">
+                                </div>
+                            </div>
+
+                            <!-- User Info -->
+                            <div class="flex-1 min-w-0 pt-1">
+                                <p class="text-gray-500 text-xs font-medium mb-1">Hi there,</p>
+                                <h3 id="userName" class="text-gray-900 text-xl font-bold truncate mb-1">Loading...</h3>
+                                <p id="userEmail" class="text-gray-600 text-sm truncate">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="px-4 py-3">
+
+                        <!-- Update Profile -->
+                        <button id="editProfileBtn"
+                            class="w-full flex items-center px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-all group">
+                            <div
+                                class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-100 transition-colors">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div class="ml-3 text-left flex-1">
+                                <p class="font-semibold text-gray-800 text-sm">Manage Profile</p>
+                                <p class="text-gray-500 text-xs mt-0.5">Update your personal information</p>
+                            </div>
+                            <i class="fas fa-angle-right text-gray-400 text-lg"></i>
+                        </button>
+
+                        <!-- Settings -->
+                        <button
+                            class="w-full flex items-center px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-all group mt-1">
+                            <div
+                                class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center flex-shrink-0 group-hover:bg-purple-100 transition-colors">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-3 text-left flex-1">
+                                <p class="font-semibold text-gray-800 text-sm">Settings & Privacy</p>
+                                <p class="text-gray-500 text-xs mt-0.5">Manage your account preferences</p>
+                            </div>
+                            <i class="fas fa-angle-right text-gray-400 text-lg"></i>
+                        </button>
+
+                        <!-- Help & Support -->
+                        <button
+                            class="w-full flex items-center px-4 py-3.5 hover:bg-gray-50 rounded-xl transition-all group mt-1">
+                            <div
+                                class="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-100 transition-colors">
+                                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-3 text-left flex-1">
+                                <p class="font-semibold text-gray-800 text-sm">Help & Support</p>
+                                <p class="text-gray-500 text-xs mt-0.5">Get assistance and FAQs</p>
+                            </div>
+                            <i class="fas fa-angle-right text-gray-400 text-lg"></i>
+                        </button>
+
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-100 my-2"></div>
+
+                    <!-- Logout Section -->
+                    <div class="px-4 py-4">
+                        <button id="logoutBtn"
+                            class="w-full bg-[#2563EB] text-white px-5 py-3.5 rounded-xl font-semibold transition-all flex items-center justify-center space-x-2.5 shadow-md hover:shadow-lg group">
+                            <i class="fas fa-sign-out-alt text-base group-hover:translate-x-1 transition-transform"></i>
+                            <span class="text-sm tracking-wide">Log Out</span>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                @keyframes slideIn {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-10px);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+
+                .animate-slideIn {
+                    animation: slideIn 0.2s ease-out;
+                }
+            </style>
+        </aside>
+    </nav>
+
+    <!-- Chatbot Button -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <a href="#" onclick="router.navigateTo('chatbot')">
+            <button id="chatbotBtn" class="w-14 h-14 rounded-full shadow-lg overflow-hidden border-2 border-gray-300">
+                <img src="bot.jpg" alt="Chatbot" class="w-full h-full object-cover" />
+            </button>
+        </a>
+    </div>
+
+    <!-- Main Content Container -->
+    <div id="app" class="h-[calc(100vh-80px)]">
+        <!-- Content will be dynamically loaded here -->
+    </div>
+
+    <script>
+        // Router Class
+        class Router {
+            constructor() {
+                this.routes = {};
+                this.currentRoute = null;
+            }
+
+            // Add route
+            addRoute(path, handler) {
+                this.routes[path] = handler;
+            }
+
+            // Navigate to route
+            navigateTo(path) {
+                if (this.routes[path]) {
+                    this.currentRoute = path;
+                    this.routes[path]();
+                    // Update URL without page refresh
+                    history.pushState({ route: path }, "", `#${path}`);
+                }
+            }
+
+            // Initialize router
+            init() {
+                // Handle browser back/forward
+                window.addEventListener("popstate", (e) => {
+                    const route = e.state?.route || "home";
+                    this.navigateTo(route);
+                });
+
+                // Load initial route - this will show home by default
+                const initialRoute = location.hash.slice(1) || "home";
+                if (this.routes[initialRoute]) {
+                    this.routes[initialRoute]();
+                    this.currentRoute = initialRoute;
+                    // Set the hash if it's empty (for home page)
+                    if (!location.hash) {
+                        history.replaceState({ route: "home" }, "", "#home");
+                    }
+                }
+            }
+        }
+
+        // Create router instance
+        const router = new Router();
+
+        router.addRoute("home", () => {
+            const navbar = document.querySelector("nav");
+            if (navbar) navbar.style.display = "flex";
+            document.getElementById("app").innerHTML = `
+   <style>
+    /* Hero section animations */
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes imageRotate {
+      0% { transform: scale(1) rotate(0deg); opacity: 1; }
+      25% { transform: scale(1.05) rotate(2deg); opacity: 0.8; }
+      50% { transform: scale(1) rotate(0deg); opacity: 0; }
+      75% { transform: scale(1.05) rotate(-2deg); opacity: 0.8; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+      }
+      50% {
+        transform: none;
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Animation classes */
+    .hero-title {
+      animation: slideInLeft 1.2s ease-out forwards;
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+
+    .hero-subtitle {
+      animation: slideInUp 1s ease-out forwards;
+      animation-delay: 0.8s;
+      opacity: 0;
+    }
+
+    .hero-buttons {
+      animation: slideInUp 1s ease-out forwards;
+      animation-delay: 1.2s;
+      opacity: 0;
+    }
+
+    .hero-image {
+      animation: slideInRight 1.2s ease-out forwards;
+      animation-delay: 0.5s;
+      opacity: 0;
+    }
+
+    /* Image rotation effect */
+    .circle-slider img {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      animation: imageRotate 12.5s infinite;
+    }
+
+    .circle-slider img:nth-child(1) { animation-delay: 0s; }
+    .circle-slider img:nth-child(2) { animation-delay: 2.5s; }
+    .circle-slider img:nth-child(3) { animation-delay: 5s; }
+    .circle-slider img:nth-child(4) { animation-delay: 7.5s; }
+    .circle-slider img:nth-child(5) { animation-delay: 10s; }
+
+    /* Button animations */
+    .btn-primary {
+      animation: bounce 2s infinite;
+      animation-delay: 2s;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+
+    /* Floating background elements */
+    .floating-element {
+      animation: float 6s ease-in-out infinite;
+      position: absolute;
+    }
+
+    .floating-1 { animation-delay: 0s; top: 20%; left: 10%; }
+    .floating-2 { animation-delay: 2s; top: 60%; right: 15%; }
+    .floating-3 { animation-delay: 4s; bottom: 30%; left: 20%; }
+
+    /* Service cards animation on hover */
+    .service-card {
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .service-icon {
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover .service-icon {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    /* Pulse animation for CTA section */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .pulse-bg {
+      animation: pulse 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 text-gray-900 py-20 overflow-hidden">
+    <!-- Floating background elements -->
+    <div class="floating-element floating-1 w-20 h-20 bg-blue-300 rounded-full opacity-20"></div>
+    <div class="floating-element floating-2 w-16 h-16 bg-purple-300 rounded-full opacity-20"></div>
+    <div class="floating-element floating-3 w-24 h-24 bg-indigo-300 rounded-full opacity-20"></div>
+
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center relative z-10">
+      <!-- Left content -->
+      <div class="flex-1 space-y-6">
+        <!-- Animated Heading -->
+        <h1 class="hero-title text-6xl font-extrabold leading-tight">
+          Career <span class="text-[#1E40AF]">Path</span>
+        </h1>
+
+        <p class="hero-subtitle text-lg text-gray-700">
+          Helping students choose the right stream, build essential skills, plan their career path, and prepare for future opportunities after 10th and 12th.
+        </p>
+
+        <div class="hero-buttons flex space-x-4">
+         <a href="#" onclick="event.preventDefault();router.navigateTo('register')" class="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-300">
+  Get Started
+</a>
+
+          <a href="#" onclick="router.navigateTo('about')" class="btn-secondary px-6 py-3 bg-white text-blue-700 border border-blue-300 rounded-lg shadow hover:bg-blue-50 transition-all duration-300">
+            Learn More
+          </a>
+        </div>
+      </div>
+
+      <!-- Right content - Image carousel -->
+      <div class="hero-image flex-1 mt-10 md:mt-0 flex justify-center">
+        <div class="circle-slider relative w-[400px] h-[400px] rounded-full overflow-hidden shadow-2xl">
+          <img src="https://images.pexels.com/photos/3184643/pexels-photo-3184643.jpeg" alt="Career guidance">
+          <img src="https://images.pexels.com/photos/3153198/pexels-photo-3153198.jpeg" alt="Students studying">
+          <img src="https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg" alt="Education">
+          <img src="https://images.pexels.com/photos/1595391/pexels-photo-1595391.jpeg" alt="Learning">
+          <img src="https://images.pexels.com/photos/2422294/pexels-photo-2422294.jpeg" alt="Success">
+        </div>
+      </div>
+    </div>
+  </section>
+
+     <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">How It Works</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to transform your career journey</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center group">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Take Quiz</h3>
+                    <p class="text-gray-600">Complete our comprehensive personality, skills, and interests assessment.</p>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl font-bold text-white">2</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Get Matched</h3>
+                    <p class="text-gray-600">Our AI analyzes your profile and suggests perfect career matches.</p>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="bg-gradient-to-r from-pink-500 to-red-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                        <span class="text-2xl font-bold text-white">3</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Start Learning</h3>
+                    <p class="text-gray-600">Follow your personalized learning path and connect with mentors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+ <!-- Services Overview -->
+<section class="py-16 bg-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">Everything You Need for Career Success</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Comprehensive tools and resources to help you make informed decisions about your future</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Quiz Card -->
+            <div id="quiz" class="bg-white rounded-xl p-8 card-hover border-2 border-blue-100">
+                <div class="bg-blue-200 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">Career Assessment Quiz</h3>
+                <p class="text-blue-700 mb-6">Discover your interests, strengths, and ideal career paths through our comprehensive assessment designed specifically for students.</p>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Start Quiz
+                </button>
+            </div>
+
+            <!-- Roadmaps Card -->
+            <div id="roadmaps" class="bg-white rounded-xl p-8 card-hover border-2 border-blue-100">
+                <div class="bg-blue-200 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">Career Roadmaps</h3>
+                <p class="text-blue-700 mb-6">Step-by-step guidance for various career paths, including required subjects, skills, and milestones for success.</p>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    View Roadmaps
+                </button>
+            </div>
+
+            <!-- Courses Card -->
+            <div id="courses" class="bg-white rounded-xl p-8 card-hover border-2 border-blue-100">
+                <div class="bg-blue-200 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">Skill Development Courses</h3>
+                <p class="text-blue-700 mb-6">Enhance your knowledge with curated courses covering essential skills for your chosen career path.</p>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    View Courses
+                </button>
+            </div>
+
+            <!-- Competitive Exams Card -->
+            <div id="exams" class="bg-white rounded-xl p-8 card-hover border-2 border-blue-100">
+                <div class="bg-blue-200 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">Competitive Exams</h3>
+                <p class="text-blue-700 mb-6">Comprehensive information about entrance exams, preparation strategies, and important dates for various competitive exams.</p>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Exam Guide
+                </button>
+            </div>
+
+            <!-- Tutors Card -->
+            <div id="tutors" class="bg-white rounded-xl p-8 card-hover border-2 border-blue-100">
+                <div class="bg-blue-200 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-blue-900 mb-4">Expert Tutors</h3>
+                <p class="text-blue-700 mb-6">Connect with experienced mentors and tutors who can provide personalized guidance for your academic and career goals.</p>
+                <button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                    Find Tutors
+                </button>
+            </div>
+
+            <!-- Success Stories Card -->
+           
+        
+    </div>
+</section>
+
+
+  
+ 
+    
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-compass text-3xl text-blue-400 mr-2"></i>
+                        <span class="text-2xl font-bold">CareerPath</span>
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-md">Empowering individuals to discover and achieve their dream careers through personalized guidance and expert mentorship.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#careerquiz" class="text-gray-400 hover:text-white transition-colors">Career Quiz</a></li>
+                        <li><a href="#courses" class="text-gray-400 hover:text-white transition-colors">Courses</a></li>
+                        <li><a href="#competitiveexams" class="text-gray-400 hover:text-white transition-colors">Competitive Exams</a></li>
+                        <li><a href="#scholarship" class="text-gray-400 hover:text-white transition-colors">Scholarship</a></li>
+                        <li><a href="#tutor" class="text-gray-400 hover:text-white transition-colors">Tutor</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+           <div class="border-t border-gray-800 mt-12 pt-8">
+    <div class="flex flex-col md:flex-row justify-center items-center">
+        <div class="text-gray-400 text-sm">
+            © 2026 CareerPath. All rights reserved.
+        </div>
+        <!-- Removed Powered by AI section -->
+    </div>
+</div>
+
+        </div>
+    </footer>
+
+    
+  </section>
+
+            `;
+
+            const images = document.querySelectorAll(".circle-slider img");
+            let index = 0;
+
+            if (images.length > 0) {
+                images[index].classList.add("active");
+                setInterval(() => {
+                    images[index].classList.remove("active");
+                    index = (index + 1) % images.length;
+                    images[index].classList.add("active");
+                }, 2500);
+            }
+        });
+
+        router.addRoute("about", async () => {
+            const res = await fetch("about.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+        });
+
+        router.addRoute("courses", async () => {
+            const res = await fetch("course.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            // Re-run scripts if course.html has them
+            const scripts = document
+                .getElementById("app")
+                .querySelectorAll("script");
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        });
+
+        router.addRoute("quiz", async () => {
+            const res = await fetch("quiz.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            // Re-run scripts if quiz.html has them
+            const scripts = document
+                .getElementById("app")
+                .querySelectorAll("script");
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        });
+
+        router.addRoute("competitive", async () => {
+            const res = await fetch("competitive.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            // Re-run scripts if login.html has them
+            const scripts = document
+                .getElementById("app")
+                .querySelectorAll("script");
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        });
+
+        router.addRoute("sch", async () => {
+            const res = await fetch("sch.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            // Re-run scripts if login.html has them
+            const scripts = document
+                .getElementById("app")
+                .querySelectorAll("script");
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        });
+        router.addRoute("tutor", async () => {
+            const res = await fetch("tutor.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            // Re-run scripts if login.html has them
+            const scripts = document
+                .getElementById("app")
+                .querySelectorAll("script");
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        });
+
+        router.addRoute("chatbot", async () => {
+            const res = await fetch("chatbot.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            // Re-run scripts inside chatbot.html if any
+            const scripts = document
+                .getElementById("app")
+                .querySelectorAll("script");
+            scripts.forEach((oldScript) => {
+                const newScript = document.createElement("script");
+                if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                } else {
+                    newScript.textContent = oldScript.textContent;
+                }
+                document.body.appendChild(newScript);
+            });
+        });
+
+        // Dropdown functionality
+        function setupDropdown(btnId, dropdownId, iconId) {
+            const btn = document.getElementById(btnId);
+            const dropdown = document.getElementById(dropdownId);
+            const icon = document.getElementById(iconId);
+
+            let isOpen = false;
+
+            btn.addEventListener("click", function (e) {
+                e.stopPropagation();
+                isOpen = !isOpen;
+
+                if (isOpen) {
+                    dropdown.classList.remove("hidden");
+                    icon.style.transform = "rotate(180deg)";
+                } else {
+                    dropdown.classList.add("hidden");
+                    icon.style.transform = "rotate(0deg)";
+                }
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener("click", function (e) {
+                if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+                    if (isOpen) {
+                        isOpen = false;
+                        dropdown.classList.add("hidden");
+                        icon.style.transform = "rotate(0deg)";
+                    }
+                }
+            });
+        }
+
+        // Prevent all form submissions from causing page reloads
+        document.addEventListener("submit", (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        // Initialize the router when page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            // Setup dropdowns
+            setupDropdown("servicesBtn", "servicesDropdown", "servicesIcon");
+            setupDropdown("contactBtn", "contactDropdown", "contactIcon");
+
+            // Initialize router
+            router.init();
+        });
+    </script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            updateProfile,
+            sendEmailVerification,
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            serverTimestamp,
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8fTiSQ69-mdRyT3HTt_hKeh0la6HvbGc",
+            authDomain: "careerpath-63df5.firebaseapp.com",
+            projectId: "careerpath-63df5",
+            storageBucket: "careerpath-63df5.firebasestorage.app",
+            messagingSenderId: "93238430237",
+            appId: "1:93238430237:web:6f2bc1fb82ea804921d4f4"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const navbar = document.querySelector("nav");
+
+        // Helper function to show messages
+        function showMessage(div, msg, isError = false) {
+            div.textContent = msg;
+            div.className = isError
+                ? "mb-4 p-4 rounded-md bg-red-100 text-red-800 border-2 border-red-300 text-sm font-medium"
+                : "mb-4 p-4 rounded-md bg-green-100 text-green-800 border-2 border-green-300 text-sm font-medium";
+            div.style.display = "block";
+
+            setTimeout(() => {
+                div.style.display = "none";
+            }, 6000);
+        }
+
+        // ---------------- REGISTER ROUTE ----------------
+        router.addRoute("register", async () => {
+            navbar.style.display = "none"; // hide navbar
+            const res = await fetch("register.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            requestAnimationFrame(() => {
+                const form = document.getElementById("registerForm");
+                const messageDiv = document.getElementById("messageDiv");
+                const loadingSpinner = document.getElementById("loadingSpinner");
+                const submitBtn = document.getElementById("registerBtn");
+
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    loadingSpinner.style.display = "flex";
+                    submitBtn.disabled = true;
+
+                    const fullName = document.getElementById("fullName").value.trim();
+                    const email = document.getElementById("email").value.trim();
+                    const password = document.getElementById("password").value.trim();
+
+                    try {
+                        if (!fullName || !email || !password)
+                            throw new Error("All fields are required.");
+
+                        const userCredential = await createUserWithEmailAndPassword(
+                            auth,
+                            email,
+                            password
+                        );
+                        const user = userCredential.user;
+
+                        await updateProfile(user, { displayName: fullName });
+                        await user.reload();
+                        await setDoc(doc(db, "users", user.uid), {
+                            uid: user.uid,
+                            fullName,
+                            email,
+                            createdAt: serverTimestamp(),
+                            isActive: true,
+                        });
+
+                        await sendEmailVerification(user);
+
+                        showMessage(
+                            messageDiv,
+                            "Account created successfully! Check your email.",
+                            false
+                        );
+                        form.reset();
+
+                        setTimeout(() => router.navigateTo("login"), 2500);
+                    } catch (error) {
+                        console.error(error);
+                        showMessage(
+                            messageDiv,
+                            error.message || "Registration failed",
+                            true
+                        );
+                    } finally {
+                        loadingSpinner.style.display = "none";
+                        submitBtn.disabled = false;
+                    }
+                });
+            });
+        });
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener("click", (e) => {
+                e.preventDefault();
+                const type = passwordInput.type === "password" ? "text" : "password";
+                passwordInput.type = type;
+                const icon = togglePassword.querySelector("i");
+                if (type === "text") {
+                    icon.classList.remove("fa-eye-slash");
+                    icon.classList.add("fa-eye");
+                } else {
+                    icon.classList.remove("fa-eye");
+                    icon.classList.add("fa-eye-slash");
+                }
+            });
+        }
+
+        // ---------------- LOGIN ROUTE ----------------
+        router.addRoute("login", async () => {
+            navbar.style.display = "none";
+            const res = await fetch("login.html");
+            const html = await res.text();
+            document.getElementById("app").innerHTML = html;
+
+            requestAnimationFrame(() => {
+                const form = document.getElementById("loginForm");
+                const messageDiv = document.getElementById("messageDiv");
+                const loadingSpinner = document.getElementById("loadingSpinner");
+                const submitBtn = document.getElementById("loginBtn");
+
+                form.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    loadingSpinner.style.display = "flex";
+                    submitBtn.disabled = true;
+
+                    // ✅ use correct IDs from your login.html
+                    const email = document.getElementById("loginEmail").value.trim();
+                    const password = document
+                        .getElementById("loginPassword")
+                        .value.trim();
+
+                    try {
+                        if (!email || !password)
+                            throw new Error("All fields are required.");
+
+                        const userCredential = await signInWithEmailAndPassword(
+                            auth,
+                            email,
+                            password
+                        );
+                        const user = userCredential.user;
+
+                        // if (!user.emailVerified) {
+                        //   await auth.signOut();
+                        //   throw new Error("Email not verified. Please check your inbox.");
+                        // }
+
+                        showMessage(messageDiv, "Login successful!", false);
+                        form.reset();
+
+                        setTimeout(() => {
+                            navbar.style.display = "flex";
+                            router.navigateTo("home");
+                        }, 1500);
+                    } catch (error) {
+                        console.error(error);
+                        showMessage(messageDiv, error.message || "Login failed", true);
+                    } finally {
+                        loadingSpinner.style.display = "none";
+                        submitBtn.disabled = false;
+                    }
+                });
+            });
+        });
+        import {
+            onAuthStateChanged,
+            signOut,
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const loginNavBtn = document.getElementById("loginNavBtn");
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // ✅ User is logged in
+                if (loginNavBtn) loginNavBtn.style.display = "none";
+            } else {
+                // 🚪 User is logged out
+                if (loginNavBtn) loginNavBtn.style.display = "block";
+            }
+        });
+
+        const profileBtn = document.getElementById("profileBtn");
+        const profileDropdown = document.getElementById("profileDropdown");
+
+        profileBtn.addEventListener("click", () => {
+            profileDropdown.classList.toggle("hidden");
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userName.textContent = user.displayName || "User";
+                userEmail.innerHTML = `<i class="fas fa-envelope text-gray-400"></i><span>${user.email}</span>`;
+            } else {
+                userName.textContent = "Guest";
+                userEmail.innerHTML = `<i class="fas fa-envelope text-gray-400"></i><span>Not logged in</span>`;
+            }
+        });
+
+        // Logout handler
+        logoutBtn.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+                alert("Logged out successfully!");
+                profileDropdown.classList.add("hidden");
+                // Redirect to login if using router
+                // router.navigateTo("login");
+            } catch (error) {
+                console.error("Logout error:", error);
+                alert("Failed to logout");
+            }
+        });
+
+        // Edit profile handler
+        editProfileBtn.addEventListener("click", () => {
+            alert("Navigate to edit profile page");
+            profileDropdown.classList.add("hidden");
+            // Add your navigation logic here
+            // router.navigateTo("edit-profile");
+        });
+    </script>
+</body>
+
+</html>

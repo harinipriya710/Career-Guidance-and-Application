@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExamAce - Professional Exam Guide</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .exam-card { background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border-left: 4px solid #2563eb; }
+    .category-badge { background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%); }
+    .search-container { position: relative; }
+    .cancel-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; background: #ef4444; color: white; border-radius: 50%; width: 24px; height: 24px; display: none; align-items: center; justify-content: center; font-size: 14px; }
+    .cancel-btn.show { display: flex; }
+    a { color: #2563eb; text-decoration: underline; }
+    a:hover { color: #1d4ed8; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 min-h-screen">
+  <div class="max-w-screen mx-auto px-6 py-8 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200">
+    
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <div class="bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 rounded-lg shadow-md p-8 mb-8 border border-slate-200">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent mb-4">ExamAce</h1>
+        <p class="text-lg text-slate-600 mb-6">Comprehensive Guide to Competitive Examinations in India</p>
+        <div class="max-w-lg mx-auto search-container">
+          <input id="searchInput" type="text" placeholder="Search examinations (NEET, JEE, CLAT, UPSC...)" class="w-full px-6 py-4 rounded-lg border-2 border-slate-200 focus:border-blue-500 outline-none text-base shadow-sm transition-all duration-300 pr-12"/>
+          <div id="cancelBtn" class="cancel-btn">×</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Medical Entrance Exams -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center">
+        <span class="category-badge text-white px-4 py-2 rounded-lg mr-4 text-lg">Medical</span>
+        Healthcare & Medical Sciences
+      </h2>
+      <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">NEET UG</h3><p class="text-blue-600 font-medium text-sm">National Eligibility cum Entrance Test</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Single entrance for MBBS, BDS, BAMS, BHMS across India.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th PCB, 50% marks (40% SC/ST/OBC).</p>
+            <p class="text-slate-700"><strong>Pattern:</strong> 180 questions, 720 marks, 3 hours, offline.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://neet.nta.nic.in" target="_blank">neet.nta.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">AIIMS</h3><p class="text-blue-600 font-medium text-sm">All India Institute of Medical Sciences</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Premier medical education through NEET counseling.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Top NEET ranks for AIIMS counseling.</p>
+            <p class="text-slate-700"><strong>Advantage:</strong> World-class education, research opportunities.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://aiims.edu" target="_blank">aiims.edu</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">NEET PG</h3><p class="text-blue-600 font-medium text-sm">Postgraduate Medical Entrance</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Entry to MD/MS courses nationwide.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> MBBS degree, completed internship.</p>
+            <p class="text-slate-700"><strong>Specializations:</strong> Medicine, Surgery, Pediatrics, etc.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://nbe.edu.in" target="_blank">nbe.edu.in</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Engineering Entrance Exams -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center">
+        <span class="category-badge text-white px-4 py-2 rounded-lg mr-4 text-lg">Engineering</span>
+        Technology & Engineering
+      </h2>
+      <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">JEE Main</h3><p class="text-blue-600 font-medium text-sm">Joint Entrance Examination</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Gateway to NITs, IIITs, qualifier for JEE Advanced.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th PCM, 75% marks, max 3 attempts.</p>
+            <p class="text-slate-700"><strong>Pattern:</strong> CBT, 90 questions, 300 marks, twice yearly.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://jeemain.nta.nic.in" target="_blank">jeemain.nta.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">JEE Advanced</h3><p class="text-blue-600 font-medium text-sm">Indian Institutes of Technology</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Exclusive entrance for IITs, ISM Dhanbad.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Top 2,50,000 JEE Main qualifiers, max 2 attempts.</p>
+            <p class="text-slate-700"><strong>Advantage:</strong> World-class education, global recognition.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://jeeadv.ac.in" target="_blank">jeeadv.ac.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">GATE</h3><p class="text-blue-600 font-medium text-sm">Graduate Aptitude Test in Engineering</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> M.Tech, PhD admissions and PSU recruitment.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> B.Tech/B.E. completed or final year.</p>
+            <p class="text-slate-700"><strong>Opportunities:</strong> IITs, NITs, PSUs like ONGC, ISRO.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://gate.iitd.ac.in" target="_blank">gate.iitd.ac.in</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Civil Services -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center">
+        <span class="category-badge text-white px-4 py-2 rounded-lg mr-4 text-lg">Civil Services</span>
+        Government & Public Service
+      </h2>
+      <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">UPSC CSE</h3><p class="text-blue-600 font-medium text-sm">Civil Services Examination</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> IAS, IPS, IFS and Group A central services.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, age 21-32 years.</p>
+            <p class="text-slate-700"><strong>Stages:</strong> Prelims, Mains, Interview, 6 attempts.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://upsc.gov.in" target="_blank">upsc.gov.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">SSC CGL</h3><p class="text-blue-600 font-medium text-sm">Combined Graduate Level</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Group B & C central government posts.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, age 18-32 years.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> Income Tax Officer, Auditor, Inspector.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://ssc.nic.in" target="_blank">ssc.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">Banking Exams</h3><p class="text-blue-600 font-medium text-sm">IBPS PO, SBI PO, RBI Grade B</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Officer and clerical positions in PSBs.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, age 20-30 years.</p>
+            <p class="text-slate-700"><strong>Exams:</strong> IBPS, SBI, RBI, NABARD recruitment.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://ibps.in" target="_blank">ibps.in</a>, <a href="https://sbi.co.in" target="_blank">sbi.co.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">TNPSC</h3><p class="text-blue-600 font-medium text-sm">Tamil Nadu Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> State administrative services in Tamil Nadu.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, Tamil Nadu domicile required.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> Group I, II services, VAO, AE positions.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://tnpsc.gov.in" target="_blank">tnpsc.gov.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">Railway Exams</h3><p class="text-blue-600 font-medium text-sm">RRB NTPC, Group D, JE, ALP</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Technical and non-technical posts in Railways.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 10th/12th/Graduate based on post.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> NTPC, JE, ALP, Group D positions.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://rrbcdg.gov.in" target="_blank">rrbcdg.gov.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">Defense Services</h3><p class="text-blue-600 font-medium text-sm">NDA, CDS, AFCAT</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Officer entry into Army, Navy, Air Force.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th pass (NDA), Graduate (CDS).</p>
+            <p class="text-slate-700"><strong>Training:</strong> NDA, IMA, Naval Academy, AFA.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://upsc.gov.in" target="_blank">upsc.gov.in</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Exams -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center">
+        <span class="category-badge text-white px-4 py-2 rounded-lg mr-4 text-lg">Professional</span>
+        Law, Design & Management
+      </h2>
+      <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">CLAT</h3><p class="text-blue-600 font-medium text-sm">Common Law Admission Test</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Entry to National Law Universities for LLB.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th any stream, 45% marks.</p>
+            <p class="text-slate-700"><strong>Subjects:</strong> English, Legal & Logical Reasoning.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://clat.ac.in" target="_blank">clat.ac.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">NATA</h3><p class="text-blue-600 font-medium text-sm">National Aptitude Test in Architecture</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Gateway to B.Arch programs nationwide.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th PCM, 50% marks, drawing aptitude.</p>
+            <p class="text-slate-700"><strong>Skills:</strong> Mathematical aptitude, spatial visualization.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://nata.in" target="_blank">nata.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">CAT</h3><p class="text-blue-600 font-medium text-sm">Common Admission Test</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> MBA admissions to IIMs and top B-schools.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, 50% marks (45% SC/ST).</p>
+            <p class="text-slate-700"><strong>Career:</strong> MBA → Management Consultant → CEO/CXO.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://iimcat.ac.in" target="_blank">iimcat.ac.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">CUET UG</h3><p class="text-blue-600 font-medium text-sm">Central Universities Entrance Test</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> UG admissions in central universities including DU.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th pass, subject-specific requirements.</p>
+            <p class="text-slate-700"><strong>Coverage:</strong> Arts, Commerce, Science streams.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://cuet.samarth.ac.in" target="_blank">cuet.samarth.ac.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">NET/JRF</h3><p class="text-blue-600 font-medium text-sm">National Eligibility Test</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Assistant Professor eligibility and JRF.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Postgraduate, 55% marks (50% SC/ST).</p>
+            <p class="text-slate-700"><strong>Career:</strong> Teaching → Research → Professor → Academia.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://ugcnet.nta.nic.in" target="_blank">ugcnet.nta.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">NIFT</h3><p class="text-blue-600 font-medium text-sm">National Institute of Fashion Technology</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Admission to fashion and design courses.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> 12th any stream, age 23-30 years.</p>
+            <p class="text-slate-700"><strong>Courses:</strong> Fashion Design, Textile, Management.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://nift.ac.in" target="_blank">nift.ac.in</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- State PSCs -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold text-slate-800 mb-8 flex items-center">
+        <span class="category-badge text-white px-4 py-2 rounded-lg mr-4 text-lg">State PSCs</span>
+        State Public Service Commissions
+      </h2>
+      <div class="grid gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">UPPSC</h3><p class="text-blue-600 font-medium text-sm">UP Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> State services in Uttar Pradesh.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, UP domicile preferred.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> PCS, ACF, RO, ARO positions.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://uppsc.up.nic.in" target="_blank">uppsc.up.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">MPPSC</h3><p class="text-blue-600 font-medium text-sm">MP Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> State administrative services in MP.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, MP domicile required.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> Deputy Collector, DSP, Commercial Tax Officer.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://mppsc.nic.in" target="_blank">mppsc.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">KPSC</h3><p class="text-blue-600 font-medium text-sm">Karnataka Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Karnataka state services recruitment.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, Karnataka domicile required.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> KAS, KPS, FDA, SDA positions.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://kpsc.kar.nic.in" target="_blank">kpsc.kar.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">BPSC</h3><p class="text-blue-600 font-medium text-sm">Bihar Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Bihar state administrative services.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, Bihar domicile preferred.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> BAS, BPS, Commercial Tax Officer.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://bpsc.bih.nic.in" target="_blank">bpsc.bih.nic.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">GPSC</h3><p class="text-blue-600 font-medium text-sm">Gujarat Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> Gujarat state administrative services.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, Gujarat domicile required.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> GPSC Class 1, 2 services, Dy Collector.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://gpsc.gujarat.gov.in" target="_blank">gpsc.gujarat.gov.in</a></p>
+          </div>
+        </div>
+        <div class="exam-card rounded-lg p-6 shadow-md border border-slate-200">
+          <div class="mb-4"><h3 class="text-xl font-bold text-slate-800">WBPSC</h3><p class="text-blue-600 font-medium text-sm">West Bengal Public Service Commission</p></div>
+          <div class="space-y-3 text-sm">
+            <p class="text-slate-700"><strong>Purpose:</strong> West Bengal state services.</p>
+            <p class="text-slate-700"><strong>Eligibility:</strong> Graduate, WB domicile preferred.</p>
+            <p class="text-slate-700"><strong>Posts:</strong> WBCS, Food Inspector, Statistical Officer.</p>
+            <p class="text-blue-600"><strong>Website:</strong> <a href="https://wbpsc.gov.in" target="_blank">wbpsc.gov.in</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white rounded-lg shadow-md p-8 text-center border border-slate-200">
+      <h3 class="text-2xl font-bold text-slate-800 mb-4">Ready to Start Your Journey?</h3>
+      <p class="text-slate-600 mb-6">Choose your path wisely. Every expert was once a beginner.</p>
+      <div class="flex justify-center space-x-6 text-sm text-slate-500">
+        <span>Study Smart</span><span>Plan Well</span><span>Stay Focused</span><span>Achieve Success</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const examCards = document.querySelectorAll('.exam-card');
+    const sections = document.querySelectorAll('section');
+
+    searchInput.addEventListener('input', function(e) {
+      const searchTerm = e.target.value.toLowerCase();
+      cancelBtn.classList.toggle('show', searchTerm.length > 0);
+      
+      examCards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        card.style.display = cardText.includes(searchTerm) ? 'block' : 'none';
+      });
+      
+      sections.forEach(section => {
+        const visibleCards = section.querySelectorAll('.exam-card[style*="block"], .exam-card:not([style*="none"])');
+        section.style.display = (searchTerm && visibleCards.length === 0) ? 'none' : 'block';
+      });
+    });
+
+    cancelBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      cancelBtn.classList.remove('show');
+      examCards.forEach(card => card.style.display = 'block');
+      sections.forEach(section => section.style.display = 'block');
+    });
+  </script>
+</body>
+</html>

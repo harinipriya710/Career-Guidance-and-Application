@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Path Quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #CDE3FE,#CDE3FE);
+      min-height: 100vh;
+    }
+    .hidden { display: none; }
+    .question-container { display: none; }
+    .question-container.active { display: block; }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#CDE3FE] to-[#CDE3FE] ">
+  <div class="w-full max-w-2xl mt-28 bg-[#F0F9FF] p-8 rounded-2xl shadow-lg mx-auto">
+    <!-- Start Screen -->
+    <div id="startScreen" class="text-center">
+      <h1 class="text-3xl font-bold mb-4 text-gray-800">CareerPath Quiz</h1>
+      <p class="text-gray-600 mb-6">Find out which career path suits you best by answering all 10 questions.</p>
+      <button onclick="startQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full transition">Start Quiz</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quizScreen" class="hidden">
+      <div class="w-full bg-gray-200 rounded-full h-3 mb-6">
+        <div id="progressBar" class="bg-blue-600 h-3 rounded-full transition-all duration-500 ease-in-out"></div>
+      </div>
+      <div id="progressInfo" class="text-sm text-gray-600 mb-4"></div>
+
+      <div id="questions"></div>
+
+      <!-- Navigation buttons -->
+      <div class="flex justify-between mt-6">
+        <button onclick="prevQuestion()" id="prevBtn" class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-full transition hidden">Previous</button>
+        <button onclick="endTest()" id="endBtn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition hidden">End Test</button>
+      </div>
+    </div>
+
+    <!-- Result Section -->
+    <div id="resultScreen" class="hidden text-center">
+      <h2 class="text-2xl font-bold mb-4 text-gray-800">Your Career Path Result</h2>
+      <p id="resultText" class="text-gray-700 mb-6"></p>
+      <button onclick="restartQuiz()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition">Restart Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { question: "What activity do you enjoy the most?", options: [
+        { text: "Solving puzzles or logical problems", category: "Analytical" },
+        { text: "Creating art, music, or writing", category: "Creative" },
+        { text: "Helping people and working in teams", category: "Social" },
+        { text: "Organizing events or leading projects", category: "Leadership" }
+      ]},
+      { question: "Which school subject do you prefer?", options: [
+        { text: "Mathematics/Science", category: "Analytical" },
+        { text: "Arts/Literature", category: "Creative" },
+        { text: "Psychology/Sociology", category: "Social" },
+        { text: "Business/Economics", category: "Leadership" }
+      ]},
+      { question: "How do you usually solve problems?", options: [
+        { text: "By analyzing data and evidence", category: "Analytical" },
+        { text: "By thinking outside the box", category: "Creative" },
+        { text: "By asking others for input", category: "Social" },
+        { text: "By taking charge and making decisions", category: "Leadership" }
+      ]},
+      { question: "What type of work environment do you prefer?", options: [
+        { text: "Quiet and research-focused", category: "Analytical" },
+        { text: "Flexible and innovative", category: "Creative" },
+        { text: "Collaborative and people-oriented", category: "Social" },
+        { text: "Fast-paced and organized", category: "Leadership" }
+      ]},
+      { question: "Which role would you take in a group project?", options: [
+        { text: "Research and data analysis", category: "Analytical" },
+        { text: "Design and creative tasks", category: "Creative" },
+        { text: "Supporting and motivating others", category: "Social" },
+        { text: "Leading and delegating tasks", category: "Leadership" }
+      ]},
+      { question: "What motivates you the most?", options: [
+        { text: "Solving difficult challenges", category: "Analytical" },
+        { text: "Expressing new ideas", category: "Creative" },
+        { text: "Helping people succeed", category: "Social" },
+        { text: "Achieving goals and success", category: "Leadership" }
+      ]},
+      { question: "Which hobby do you enjoy?", options: [
+        { text: "Solving Sudoku or coding", category: "Analytical" },
+        { text: "Drawing, music, or writing", category: "Creative" },
+        { text: "Volunteering or group activities", category: "Social" },
+        { text: "Debating or managing events", category: "Leadership" }
+      ]},
+      { question: "How do you make decisions?", options: [
+        { text: "Based on logic and facts", category: "Analytical" },
+        { text: "Following intuition/creativity", category: "Creative" },
+        { text: "After discussing with friends", category: "Social" },
+        { text: "By quickly choosing and leading", category: "Leadership" }
+      ]},
+      { question: "What’s your dream job like?", options: [
+        { text: "Scientist, engineer, or researcher", category: "Analytical" },
+        { text: "Designer, writer, or musician", category: "Creative" },
+        { text: "Teacher, counselor, or nurse", category: "Social" },
+        { text: "Manager, entrepreneur, or politician", category: "Leadership" }
+      ]},
+      { question: "Which strength defines you most?", options: [
+        { text: "Critical thinking", category: "Analytical" },
+        { text: "Imagination", category: "Creative" },
+        { text: "Empathy", category: "Social" },
+        { text: "Confidence", category: "Leadership" }
+      ]}
+    ];
+
+    let currentQuestion = 0;
+    let answers = new Array(questions.length).fill(null);
+    let scores = { Analytical: 0, Creative: 0, Social: 0, Leadership: 0 };
+
+    function startQuiz() {
+      document.getElementById("startScreen").classList.add("hidden");
+      document.getElementById("resultScreen").classList.add("hidden");
+      document.getElementById("quizScreen").classList.remove("hidden");
+      currentQuestion = 0;
+      answers.fill(null);
+      scores = { Analytical: 0, Creative: 0, Social: 0, Leadership: 0 };
+      loadQuestion();
+      updateProgress();
+    }
+
+    function loadQuestion() {
+      const qContainer = document.getElementById("questions");
+      qContainer.innerHTML = "";
+      const q = questions[currentQuestion];
+      const div = document.createElement("div");
+      div.className = "question-container active";
+      div.innerHTML = `
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">${q.question}</h3>
+        <div class="space-y-3">
+          ${q.options.map((opt, i) => `
+            <button onclick="selectOption(${currentQuestion}, '${opt.category}')" 
+              class="w-full py-2 px-4 rounded-lg border transition ${answers[currentQuestion]===opt.category ? 'bg-blue-200' : 'bg-gray-100 hover:bg-blue-100'}">
+              ${opt.text}
+            </button>
+          `).join('')}
+        </div>
+      `;
+      qContainer.appendChild(div);
+
+      document.getElementById("prevBtn").classList.toggle("hidden", currentQuestion === 0);
+      document.getElementById("endBtn").classList.toggle("hidden", currentQuestion !== questions.length - 1);
+    }
+
+    function selectOption(qIndex, category) {
+      answers[qIndex] = category;
+
+      // Auto move to next question unless last one
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+        updateProgress();
+      } else {
+        // Last question answered, show End Test button
+        loadQuestion();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+        updateProgress();
+      }
+    }
+
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / questions.length) * 100;
+      document.getElementById("progressBar").style.width = progress + "%";
+      document.getElementById("progressInfo").textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+    }
+
+    function endTest() {
+      if (answers.includes(null)) {
+        alert("Please answer all 10 questions before ending the test.");
+        return;
+      }
+      // Calculate scores
+      answers.forEach(ans => scores[ans]++);
+      const maxScore = Math.max(...Object.values(scores));
+      const topCategories = Object.keys(scores).filter(cat => scores[cat] === maxScore);
+
+      let resultMessage = "";
+      if (topCategories.length === 1) {
+        resultMessage = `You are more interested in <strong>${topCategories[0]}</strong> careers.`;
+      } else {
+        resultMessage = `You are more interested in <strong>${topCategories.join(" and ")}</strong> careers.`;
+      }
+
+      document.getElementById("quizScreen").classList.add("hidden");
+      document.getElementById("resultScreen").classList.remove("hidden");
+      document.getElementById("resultText").innerHTML = resultMessage;
+    }
+
+    function restartQuiz() {
+      document.getElementById("resultScreen").classList.add("hidden");
+      document.getElementById("startScreen").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>

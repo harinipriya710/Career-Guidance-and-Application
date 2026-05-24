@@ -1,0 +1,89 @@
+<!-- about.html -->
+<section class="min-h-screen bg-gradient-to-b from-[#f0f9ff] to-white p-10 animate-fadeIn">
+  <div class="max-w-5xl mx-auto text-center">
+    <!-- Title -->
+    <h1 class="text-4xl font-extrabold text-[#1E40AF] mb-4 animate-slideUp">About CareerPath</h1>
+    <div class="w-20 h-1 bg-[#1e40af] mx-auto rounded-full mb-8 animate-grow"></div>
+    
+    <!-- Intro -->
+    <p class="text-lg text-gray-700 leading-relaxed mb-10 animate-fadeInDelay">
+      CareerPath is your one-stop destination for personalized career and education guidance. 
+      We understand that choosing the right stream, degree, or career after school can feel overwhelming, 
+      especially with the growing number of opportunities and the pressure to make the “right” decision. 
+      That’s why our platform combines smart technology with expert insights to make the journey simple 
+      and clear for students. 
+    </p>
+
+    <p class="text-lg text-gray-700 leading-relaxed mb-10 animate-fadeInDelay2">
+      Through our interactive aptitude and interest-based quiz, students discover careers that align with 
+      their strengths, passions, and future goals. We provide detailed career roadmaps—step-by-step pathways 
+      showing the education, skills, and opportunities needed to reach specific professions. Beyond just career 
+      matching, CareerPath also keeps students updated with college admissions timelines, government scholarships, 
+      and entrance exam alerts, ensuring they never miss an important milestone.
+    </p>
+
+    <p class="text-lg text-gray-700 leading-relaxed mb-10 animate-fadeInDelay3">
+      What makes us unique is our focus on practical readiness. We go beyond theory, helping students explore 
+      skill development opportunities, mentorship programs, and real-world job readiness tips. Whether you are 
+      a high school student exploring your future, a parent guiding your child, or a graduate looking to reskill, 
+      CareerPath is designed to support you at every stage.
+    </p>
+
+    <!-- Mission -->
+    <div class="bg-white shadow-md rounded-xl p-6 mb-6 animate-slideUpSlow">
+      <h2 class="text-2xl font-bold text-[#1E40AF] mb-3">Our Mission</h2>
+      <p class="text-gray-700">
+        To empower students to make informed, confident choices about their education and career, 
+        while building a future where every learner can achieve their true potential.
+      </p>
+    </div>
+
+    <!-- Vision -->
+    <div class="bg-blue-50 shadow-md rounded-xl p-6 mb-6 animate-slideUpSlow">
+      <h2 class="text-2xl font-bold text-[#1E40AF] mb-3">Our Vision</h2>
+      <p class="text-gray-700">
+        A world where no student feels lost when choosing their future, but instead, 
+        has a clear roadmap leading to fulfilling careers and lifelong learning.
+      </p>
+    </div>
+
+    <!-- Values -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      <div class="p-6 bg-white shadow-lg rounded-xl animate-slideUpSlow">
+        <h3 class="font-semibold text-[#1E40AF] mb-2">Personalization</h3>
+        <p class="text-gray-600 text-sm">
+          Every student is unique. We provide tailored career and education guidance 
+          based on individual strengths and interests.
+        </p>
+      </div>
+      <div class="p-6 bg-white shadow-lg rounded-xl animate-slideUpSlow">
+        <h3 class="font-semibold text-[#1E40AF] mb-2">Accessibility</h3>
+        <p class="text-gray-600 text-sm">
+          Guidance made available to all—urban or rural—through web and mobile platforms.
+        </p>
+      </div>
+      <div class="p-6 bg-white shadow-lg rounded-xl animate-slideUpSlow">
+        <h3 class="font-semibold text-[#1E40AF] mb-2">Innovation</h3>
+        <p class="text-gray-600 text-sm">
+          Leveraging AI and data-driven insights to stay ahead and provide accurate recommendations.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Base Animations */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes grow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
+  /* Animation Classes */
+  .animate-fadeIn { animation: fadeIn 0.8s ease-out; }
+  .animate-fadeInDelay { animation: fadeIn 1s ease-out 0.2s forwards; opacity: 0; }
+  .animate-fadeInDelay2 { animation: fadeIn 1s ease-out 0.4s forwards; opacity: 0; }
+  .animate-fadeInDelay3 { animation: fadeIn 1s ease-out 0.6s forwards; opacity: 0; }
+  .animate-slideUp { animation: slideUp 0.9s ease-out; }
+  .animate-slideUpSlow { animation: slideUp 1s ease-out; }
+  .animate-grow { animation: grow 0.8s ease-out; transform-origin: center; }
+</style>

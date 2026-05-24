@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance - Contact Our Teachers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'light-blue': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .teacher-card {
+            animation-fill-mode: both;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-sky-100 to-blue-200 min-h-screen">
+    <div class="max-w-screen mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200">
+        <!-- Header -->
+        <header class="text-center mb-16 py-16">
+            <h1 class="text-5xl md:text-6xl font-bold text-[#1E40AF] mb-4 drop-shadow-lg">
+                CareerPath Center
+            </h1>
+            <p class="text-xl text-[#1E40AF] max-w-2xl mx-auto">
+                Connect with our experienced teachers for personalized career counseling
+            </p>
+        </header>
+
+        <!-- Teachers Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8 mb-16">
+            <!-- Teacher 1 -->
+            <div class="teacher-card bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-sky-400">
+                <div class="flex items-start space-x-6 mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-500 to-blue-700 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        DR
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Dr. Sarah Johnson</h3>
+                        <p class="text-sky-600 font-semibold mb-1">Science & Engineering Counselor</p>
+                        <p class="text-gray-500 text-sm">15 years of experience</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-gray-800 font-semibold mb-3">Specializations:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">STEM Careers</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Engineering</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Medical Field</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Research</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6 space-y-3 mb-6">
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                        <a href="tel:+1234567890" class="text-gray-700 hover:text-sky-600 font-medium">+1 (234) 567-8900</a>
+                    </div>
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        <a href="mailto:sarah.johnson@school.edu" class="text-gray-700 hover:text-sky-600 font-medium">sarah.johnson@school.edu</a>
+                    </div>
+                </div>
+
+                <button onclick="window.open('tel:+1234567890')" class="w-full bg-gradient-to-r from-sky-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full hover:from-sky-600 hover:to-blue-600 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+                    📞 Call Now
+                </button>
+
+                <div class="mt-6 bg-sky-50 border-l-4 border-sky-400 p-4 rounded-r-lg">
+                    <h4 class="font-semibold text-gray-800 mb-2">Available Hours:</h4>
+                    <p class="text-gray-600 text-sm">
+                        Monday-Friday: 9:00 AM - 5:00 PM<br>
+                        Saturday: 10:00 AM - 2:00 PM
+                    </p>
+                </div>
+            </div>
+
+            <!-- Teacher 2 -->
+            <div class="teacher-card bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-sky-400">
+                <div class="flex items-start space-x-6 mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        MR
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Mr. Robert Chen</h3>
+                        <p class="text-sky-600 font-semibold mb-1">Business & Economics Advisor</p>
+                        <p class="text-gray-500 text-sm">12 years of experience</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-gray-800 font-semibold mb-3">Specializations:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Business</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Finance</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Entrepreneurship</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Economics</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6 space-y-3 mb-6">
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                        <a href="tel:+1234567891" class="text-gray-700 hover:text-sky-600 font-medium">+1 (234) 567-8901</a>
+                    </div>
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        <a href="mailto:robert.chen@school.edu" class="text-gray-700 hover:text-sky-600 font-medium">robert.chen@school.edu</a>
+                    </div>
+                </div>
+
+                <button onclick="window.open('tel:+1234567891')" class="w-full bg-gradient-to-r from-sky-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full hover:from-sky-600 hover:to-blue-600 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+                    📞 Call Now
+                </button>
+
+                <div class="mt-6 bg-sky-50 border-l-4 border-sky-400 p-4 rounded-r-lg">
+                    <h4 class="font-semibold text-gray-800 mb-2">Available Hours:</h4>
+                    <p class="text-gray-600 text-sm">
+                        Monday-Friday: 8:00 AM - 4:00 PM<br>
+                        Evening consultations by appointment
+                    </p>
+                </div>
+            </div>
+
+            <!-- Teacher 3 -->
+            <div class="teacher-card bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-sky-400">
+                <div class="flex items-start space-x-6 mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        MS
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Ms. Emily Rodriguez</h3>
+                        <p class="text-sky-600 font-semibold mb-1">Arts & Humanities Guide</p>
+                        <p class="text-gray-500 text-sm">10 years of experience</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-gray-800 font-semibold mb-3">Specializations:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Creative Arts</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Liberal Arts</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Psychology</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Social Work</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6 space-y-3 mb-6">
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                        <a href="tel:+1234567892" class="text-gray-700 hover:text-sky-600 font-medium">+1 (234) 567-8902</a>
+                    </div>
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        <a href="mailto:emily.rodriguez@school.edu" class="text-gray-700 hover:text-sky-600 font-medium">emily.rodriguez@school.edu</a>
+                    </div>
+                </div>
+
+                <button onclick="window.open('tel:+1234567892')" class="w-full bg-gradient-to-r from-sky-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full hover:from-sky-600 hover:to-blue-600 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+                    📞 Call Now
+                </button>
+
+                <div class="mt-6 bg-sky-50 border-l-4 border-sky-400 p-4 rounded-r-lg">
+                    <h4 class="font-semibold text-gray-800 mb-2">Available Hours:</h4>
+                    <p class="text-gray-600 text-sm">
+                        Tuesday-Saturday: 10:00 AM - 6:00 PM<br>
+                        Virtual sessions available
+                    </p>
+                </div>
+            </div>
+
+            <!-- Teacher 4 -->
+            <div class="teacher-card bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-t-4 border-sky-400">
+                <div class="flex items-start space-x-6 mb-6">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-400 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                        DR
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Dr. Michael Thompson</h3>
+                        <p class="text-sky-600 font-semibold mb-1">Technology & IT Specialist</p>
+                        <p class="text-gray-500 text-sm">18 years of experience</p>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <h4 class="text-gray-800 font-semibold mb-3">Specializations:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Computer Science</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">AI & Data Science</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Cybersecurity</span>
+                        <span class="px-3 py-1 bg-sky-50 text-sky-700 rounded-full text-sm border border-sky-200">Tech Startups</span>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-100 pt-6 space-y-3 mb-6">
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                        </svg>
+                        <a href="tel:+1234567893" class="text-gray-700 hover:text-sky-600 font-medium">+1 (234) 567-8903</a>
+                    </div>
+                    <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-sky-50 transition-colors">
+                        <svg class="w-5 h-5 text-sky-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                        </svg>
+                        <a href="mailto:michael.thompson@school.edu" class="text-gray-700 hover:text-sky-600 font-medium">michael.thompson@school.edu</a>
+                    </div>
+                </div>
+
+                <button onclick="window.open('tel:+1234567893')" class="w-full bg-gradient-to-r from-sky-500 to-blue-500 text-white font-bold py-3 px-6 rounded-full hover:from-sky-600 hover:to-blue-600 transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1">
+                    📞 Call Now
+                </button>
+
+                <div class="mt-6 bg-sky-50 border-l-4 border-sky-400 p-4 rounded-r-lg">
+                    <h4 class="font-semibold text-gray-800 mb-2">Available Hours:</h4>
+                    <p class="text-gray-600 text-sm">
+                        Monday-Friday: 9:00 AM - 5:00 PM<br>
+                        Weekend workshops available
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Contact -->
+      
+    </div>
+
+    <script>
+        // Add smooth loading animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.teacher-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.classList.add('animate-fade-in-up');
+                }, index * 150);
+            });
+        });
+
+        // Enhanced button interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Create ripple effect
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                ripple.classList.add('absolute', 'rounded-full', 'bg-white', 'opacity-30', 'animate-ping');
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Guidance App - Roadmaps</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+  <style>
+    .career-card { transition: all 0.3s ease; }
+    .career-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    .career-card.active { transform: scale(1.02); box-shadow: 0 10px 30px rgba(59,130,246,0.3); }
+    .subcategory-card { transition: all 0.2s ease; }
+    .subcategory-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .subcategory-card.active { border: 2px solid #3b82f6; background: #F0F9FF; }
+    .roadmap-timeline { position: relative; padding-left: 2rem; }
+    .roadmap-timeline::before { content: ''; position: absolute; left: 0.75rem; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom,#3b82f6,#10b981);}
+    .timeline-item { position: relative; margin-bottom: 2rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -2.75rem; top: 0.5rem; width: 1rem; height: 1rem; background:#3b82f6; border-radius: 50%; border:3px solid white; box-shadow:0 0 0 3px #3b82f6; z-index:1;}
+    .skill-tag { transition: all 0.2s ease; }
+    .skill-tag:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(59,130,246,0.2); }
+  </style>
+</head>
+<body class="min-h-screen bg-[#C3DDFE]">
+  <!-- Header -->
+  <div class=" bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 shadow-sm border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <h1 class="text-3xl font-bold text-gray-900">Career Roadmaps</h1>
+      <p class="mt-2 text-lg text-gray-600">Discover your path to success with structured learning roadmaps</p>
+      <div id="breadcrumb" class="mt-4 flex items-center space-x-2 text-sm text-gray-500"></div>
+    </div>
+  </div>
+
+  <div class="max-w-screen  mx-auto px-4 sm:px-6 lg:px-8 py-8  bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200">
+    <div id="career-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8 "></div>
+    <div id="subcategory-section" class="mb-8 " style="display:none;">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4" id="subcategory-title"></h2>
+      <div id="subcategory-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </div>
+    <div id="career-details" class="bg-[#F0F9FF]rounded-xl shadow-sm p-8" style="display:none;"></div>
+  </div>
+
+  <script>
+    // ✅ Careers data
+    const careers = {
+     'be-btech-engineering': {
+  title: 'BE/BTech Engineering',
+  icon: 'cpu',
+  color: 'bg-gradient-to-r from-blue-600 to-indigo-700',
+  description: 'Bachelor of Engineering/Technology - Choose your engineering specialization.',
+  averageSalary: '₹3,50,000 - ₹15,00,000',
+  jobGrowth: '7% (Steady growth)',
+  hasSubcategories: true,
+  subcategories: {
+    'cse': {
+      title: 'Computer Science Engineering',
+      description:'Software development, AI, ML, Cloud Computing',
+      averageSalary:'₹4,00,000 - ₹25,00,000',
+      jobGrowth:'15%',
+      content: {
+        overview: 'CSE is one of the most in-demand branches of engineering, focusing on computer systems, programming, algorithms, AI, ML, cybersecurity, and cloud technologies.',
+        skills: [
+          'Programming (Python, Java, C++)',
+          'Data Structures & Algorithms',
+          'Database Management (SQL, NoSQL)',
+          'Web & App Development',
+          'AI & Machine Learning',
+          'Cloud Computing (AWS, Azure, GCP)',
+          'Cybersecurity Basics'
+        ],
+        careerOptions: [
+          'Software Engineer',
+          'Data Scientist',
+          'AI/ML Engineer',
+          'Cloud Architect',
+          'Cybersecurity Specialist',
+          'Full-Stack Developer',
+          'Systems Analyst'
+        ],
+        topRecruiters: [
+          'Google',
+          'Microsoft',
+          'Amazon',
+          'TCS',
+          'Infosys',
+          'Wipro',
+          'Accenture'
+        ],
+        higherStudies: [
+          'M.Tech in CSE/AI/DS',
+          'MS in Computer Science (abroad)',
+          'MBA in Technology Management',
+          'Certifications in AI, ML, Cloud, Cybersecurity'
+        ]
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Programming Basics', duration: '6 months', skills: ['C', 'Python', 'Mathematics'] },
+          { title: 'Data Structures & OOP', duration: '6 months', skills: ['C++', 'Java', 'Problem Solving'] }
+        ],
+        intermediate: [
+          { title: 'DBMS & OS', duration: '1 year', skills: ['SQL', 'Linux', 'OS Concepts'] },
+          { title: 'Web Development', duration: '6 months', skills: ['HTML', 'CSS', 'JavaScript', 'React'] }
+        ],
+        advanced: [
+          { title: 'AI & Machine Learning', duration: '1 year', skills: ['ML Algorithms', 'Python Libraries'] },
+          { title: 'Cloud & Cybersecurity', duration: '6 months', skills: ['AWS', 'Azure', 'Security Basics'] },
+          { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Project Management', 'Teamwork'] }
+        ]
+      }
+    },
+    'it': {
+      title: 'Information Technology',
+      description:'IT systems, networks, and software',
+      averageSalary:'₹3,50,000 - ₹15,00,000',
+      jobGrowth:'12%',
+      content: {
+        overview: 'IT focuses on software, networks, databases, and IT infrastructure that drive digital transformation.',
+        skills: [
+          'Networking Basics',
+          'Database Management',
+          'Cloud Platforms',
+          'Web Development',
+          'Cybersecurity',
+          'System Administration',
+          'Data Analytics'
+        ],
+        careerOptions: [
+          'IT Consultant',
+          'Network Engineer',
+          'System Administrator',
+          'Database Manager',
+          'Cybersecurity Analyst',
+          'Web Developer'
+        ],
+        topRecruiters: ['Infosys', 'Wipro', 'Cognizant', 'Capgemini', 'IBM', 'Accenture'],
+        higherStudies: ['M.Tech in IT', 'MS in Information Systems', 'MBA in IT Management']
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Basics of IT & Networking', duration: '6 months', skills: ['Networking', 'Python'] },
+          { title: 'Database Management', duration: '6 months', skills: ['SQL', 'NoSQL'] }
+        ],
+        intermediate: [
+          { title: 'Web & Mobile Development', duration: '1 year', skills: ['React', 'JavaScript', 'Android'] },
+          { title: 'System Administration', duration: '6 months', skills: ['Linux', 'Windows Server'] }
+        ],
+        advanced: [
+          { title: 'Cloud Computing & DevOps', duration: '1 year', skills: ['AWS', 'Azure', 'CI/CD'] },
+          { title: 'Cybersecurity & Ethical Hacking', duration: '6 months', skills: ['Network Security', 'Firewalls'] },
+          { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Teamwork', 'Implementation'] }
+        ]
+      }
+    },
+    'ece': {
+      title: 'Electronics & Communication Engineering',
+      description:'Circuits, chips, and communication systems',
+      averageSalary:'₹3,20,000 - ₹14,00,000',
+      jobGrowth:'9%',
+      content: {
+        overview: 'ECE focuses on electronics, circuits, VLSI, and modern communication technologies including 5G and IoT.',
+        skills: ['Digital Electronics', 'VLSI Design', 'Embedded Systems', 'IoT', 'Signal Processing', 'Networking'],
+        careerOptions: ['Electronics Engineer', 'Embedded Engineer', 'Telecom Engineer', 'IoT Developer'],
+        topRecruiters: ['Qualcomm', 'Intel', 'Samsung', 'Nokia', 'Cisco', 'TCS'],
+        higherStudies: ['M.Tech in VLSI/Embedded Systems', 'MS in Electronics', 'PhD in Communication Engineering']
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Basic Electronics & Circuits', duration: '6 months', skills: ['Circuits', 'Digital Logic'] },
+          { title: 'Programming for ECE', duration: '6 months', skills: ['C', 'Python'] }
+        ],
+        intermediate: [
+          { title: 'Signals & Systems', duration: '1 year', skills: ['DSP', 'Communication Theory'] },
+          { title: 'Embedded Systems', duration: '6 months', skills: ['Microcontrollers', 'Arduino'] }
+        ],
+        advanced: [
+          { title: 'VLSI & Chip Design', duration: '1 year', skills: ['FPGA', 'HDL'] },
+          { title: 'Wireless & IoT Systems', duration: '6 months', skills: ['IoT', '5G Networks'] },
+          { title: 'Final Year Project + Internship', duration: '6 months', skills: ['PCB Design', 'Prototyping'] }
+        ]
+      }
+    },
+
+'eee': {
+  title: 'Electrical & Electronics Engineering',
+  description: 'Power systems, electrical machines, renewable energy.',
+  averageSalary:'₹3,20,000 - ₹14,00,000',
+  jobGrowth:'8%',
+  content: {
+    overview: 'EEE focuses on electricity, power generation, and electronics integration. It is vital for industries like energy, manufacturing, and automation.',
+    skills: [
+      'Circuit Theory',
+      'Power Systems',
+      'Electrical Machines',
+      'Control Systems',
+      'Power Electronics',
+      'Renewable Energy',
+      'Automation Basics'
+    ],
+    careerOptions: [
+      'Electrical Engineer',
+      'Power Systems Engineer',
+      'Control Systems Engineer',
+      'Energy Consultant',
+      'Automation Engineer'
+    ],
+    topRecruiters: [
+      'Siemens',
+      'ABB',
+      'L&T',
+      'GE',
+      'BHEL',
+      'Tata Power'
+    ],
+    higherStudies: [
+      'M.Tech in Power Systems/Control Systems',
+      'MS in Electrical Engineering',
+      'MBA for Management',
+      'Certifications in PLC/SCADA'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Electrical Fundamentals', duration: '6 months', skills: ['Ohm’s Law', 'Circuit Basics'] },
+      { title: 'Electronics Basics', duration: '6 months', skills: ['Semiconductors', 'Diodes', 'Transistors'] }
+    ],
+    intermediate: [
+      { title: 'Electrical Machines', duration: '1 year', skills: ['Transformers', 'Motors', 'Generators'] },
+      { title: 'Power Systems', duration: '6 months', skills: ['Grid Systems', 'Transmission'] }
+    ],
+    advanced: [
+      { title: 'Renewable Energy & Smart Grids', duration: '1 year', skills: ['Solar', 'Wind', 'Smart Grid Tech'] },
+      { title: 'Industrial Automation', duration: '6 months', skills: ['PLC', 'SCADA'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Projects', 'Team Collaboration'] }
+    ]
+  }
+},
+
+'mechanical': {
+  title: 'Mechanical Engineering',
+  description: 'Design, manufacturing, thermal engineering, robotics.',
+  averageSalary:'₹3,00,000 - ₹12,00,000',
+  jobGrowth:'6%',
+  content: {
+    overview: 'Mechanical Engineering deals with design, mechanics, thermodynamics, and manufacturing processes. It forms the backbone of all engineering industries.',
+    skills: [
+      'Engineering Drawing',
+      'Thermodynamics',
+      'Strength of Materials',
+      'CAD/CAM/CAE',
+      'Fluid Mechanics',
+      'Robotics',
+      'Manufacturing Technology'
+    ],
+    careerOptions: [
+      'Design Engineer',
+      'Automobile Engineer',
+      'Thermal Engineer',
+      'Manufacturing Engineer',
+      'Robotics Engineer'
+    ],
+    topRecruiters: [
+      'Tata Motors',
+      'Ashok Leyland',
+      'ISRO',
+      'DRDO',
+      'L&T',
+      'Bosch'
+    ],
+    higherStudies: [
+      'M.Tech in Thermal/Design/Robotics',
+      'MS in Mechanical Engineering',
+      'MBA in Operations',
+      'Certifications in CAD/CAE'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Mechanics', duration: '6 months', skills: ['Statics', 'Dynamics', 'Mathematics'] },
+      { title: 'Engineering Drawing & CAD', duration: '6 months', skills: ['AutoCAD', 'SolidWorks'] }
+    ],
+    intermediate: [
+      { title: 'Thermodynamics & Fluid Mechanics', duration: '1 year', skills: ['Heat Transfer', 'Fluid Dynamics'] },
+      { title: 'Manufacturing Technology', duration: '6 months', skills: ['CNC', '3D Printing'] }
+    ],
+    advanced: [
+      { title: 'Robotics & Automation', duration: '1 year', skills: ['Kinematics', 'Mechatronics'] },
+      { title: 'Automobile Engineering', duration: '6 months', skills: ['Engines', 'Vehicle Dynamics'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Project', 'Collaboration'] }
+    ]
+  }
+},
+
+'civil': {
+  title: 'Civil Engineering',
+  description: 'Infrastructure, construction, structural design, urban planning.',
+  averageSalary:'₹3,00,000 - ₹10,00,000',
+  jobGrowth:'5%',
+  content: {
+    overview: 'Civil Engineering involves the planning, design, and construction of infrastructure such as bridges, roads, dams, and buildings.',
+    skills: [
+      'Structural Analysis',
+      'Construction Management',
+      'Surveying',
+      'Geotechnical Engineering',
+      'Environmental Engineering',
+      'Urban Planning'
+    ],
+    careerOptions: [
+      'Structural Engineer',
+      'Construction Engineer',
+      'Transportation Engineer',
+      'Urban Planner',
+      'Site Engineer'
+    ],
+    topRecruiters: [
+      'L&T Construction',
+      'GMR Group',
+      'NBCC',
+      'HCC',
+      'Government Departments'
+    ],
+    higherStudies: [
+      'M.Tech in Structural/Transportation Engineering',
+      'MS in Civil Engineering',
+      'MBA in Project Management',
+      'Certifications in AutoCAD, STAAD.Pro'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Engineering Mechanics', duration: '6 months', skills: ['Statics', 'Surveying'] },
+      { title: 'Material Science', duration: '6 months', skills: ['Concrete', 'Steel Structures'] }
+    ],
+    intermediate: [
+      { title: 'Structural Analysis & Design', duration: '1 year', skills: ['STAAD.Pro', 'AutoCAD'] },
+      { title: 'Geotechnical & Environmental Engg', duration: '6 months', skills: ['Soil Testing', 'Water Treatment'] }
+    ],
+    advanced: [
+      { title: 'Urban Planning & Transportation', duration: '1 year', skills: ['Smart Cities', 'Transport Design'] },
+      { title: 'Construction Management', duration: '6 months', skills: ['Project Scheduling', 'Cost Estimation'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Exposure', 'Team Work'] }
+    ]
+  }
+},'it': {
+  title: 'Information Technology',
+  description: 'Focuses on software, databases, networking, and IT systems.',
+  averageSalary:'₹4,00,000 - ₹20,00,000',
+  jobGrowth:'16%',
+  content: {
+    overview: 'IT deals with managing and processing information through software, databases, and networks. It overlaps with CSE but focuses more on system implementation and IT services.',
+    skills: [
+      'Programming (Java, Python)',
+      'Database Management',
+      'Networking & Security',
+      'Cloud Computing',
+      'Web & Mobile App Development',
+      'Data Analytics',
+      'DevOps'
+    ],
+    careerOptions: [
+      'Software Developer',
+      'System Administrator',
+      'Database Administrator',
+      'Network Engineer',
+      'Cloud Engineer',
+      'IT Consultant'
+    ],
+    topRecruiters: [
+      'Infosys',
+      'TCS',
+      'Wipro',
+      'IBM',
+      'Accenture',
+      'Cognizant',
+      'Capgemini'
+    ],
+    higherStudies: [
+      'M.Tech in IT/Networking',
+      'MS in Computer Science/Information Systems',
+      'MBA in IT Management',
+      'Certifications in Cloud/Networking'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Programming & Basics of IT', duration: '6 months', skills: ['C', 'Java', 'Networking Basics'] },
+      { title: 'Databases & Web Basics', duration: '6 months', skills: ['SQL', 'HTML', 'CSS'] }
+    ],
+    intermediate: [
+      { title: 'Operating Systems & Networks', duration: '1 year', skills: ['Linux', 'TCP/IP', 'System Admin'] },
+      { title: 'Full-Stack Development', duration: '6 months', skills: ['React', 'Node.js', 'APIs'] }
+    ],
+    advanced: [
+      { title: 'Cloud & Cybersecurity', duration: '1 year', skills: ['AWS', 'Azure', 'Security Protocols'] },
+      { title: 'Big Data & Analytics', duration: '6 months', skills: ['Hadoop', 'Spark', 'Python'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Project', 'Collaboration'] }
+    ]
+  }
+},
+
+'biotech': {
+  title: 'Biotechnology Engineering',
+  description: 'Biological processes, genetics, bioinformatics, and pharmaceuticals.',
+  averageSalary:'₹3,00,000 - ₹9,00,000',
+  jobGrowth:'10%',
+  content: {
+    overview: 'Biotech engineering applies biology and technology to develop products in healthcare, agriculture, and environment. It involves genetic engineering, pharmaceuticals, and bioinformatics.',
+    skills: [
+      'Genetics & Molecular Biology',
+      'Microbiology',
+      'Bioprocess Engineering',
+      'Bioinformatics',
+      'Pharmaceutical Technology',
+      'Biostatistics'
+    ],
+    careerOptions: [
+      'Biotech Engineer',
+      'Genetic Engineer',
+      'Pharmaceutical Scientist',
+      'Clinical Researcher',
+      'Bioinformatics Specialist'
+    ],
+    topRecruiters: [
+      'Biocon',
+      'Serum Institute',
+      'Dr. Reddy’s',
+      'Pfizer',
+      'Novartis',
+      'Government Research Labs'
+    ],
+    higherStudies: [
+      'M.Tech in Biotechnology/Bioinformatics',
+      'MS in Biomedical Sciences',
+      'PhD in Genetics/Pharma',
+      'MBA in Healthcare'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Biology & Chemistry Basics', duration: '6 months', skills: ['Cell Biology', 'Organic Chemistry'] },
+      { title: 'Introduction to Biotechnology', duration: '6 months', skills: ['Microbiology', 'Lab Techniques'] }
+    ],
+    intermediate: [
+      { title: 'Genetic Engineering & Bioprocessing', duration: '1 year', skills: ['DNA Tech', 'Fermentation'] },
+      { title: 'Bioinformatics Tools', duration: '6 months', skills: ['BLAST', 'Protein Modeling'] }
+    ],
+    advanced: [
+      { title: 'Pharmaceutical Technology', duration: '1 year', skills: ['Drug Development', 'Clinical Trials'] },
+      { title: 'Environmental & Agricultural Biotech', duration: '6 months', skills: ['GM Crops', 'Waste Treatment'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Research', 'Teamwork'] }
+    ]
+  }
+},
+
+'chemical': {
+  title: 'Chemical Engineering',
+  description: 'Processes involving chemicals, fuels, polymers, and materials.',
+  averageSalary:'₹3,50,000 - ₹12,00,000',
+  jobGrowth:'7%',
+  content: {
+    overview: 'Chemical Engineering focuses on designing processes for large-scale manufacturing of chemicals, fuels, pharmaceuticals, and materials.',
+    skills: [
+      'Organic & Inorganic Chemistry',
+      'Thermodynamics',
+      'Reaction Engineering',
+      'Process Control',
+      'Material Science',
+      'Safety Engineering'
+    ],
+    careerOptions: [
+      'Process Engineer',
+      'Petrochemical Engineer',
+      'Pharmaceutical Engineer',
+      'Materials Scientist',
+      'Environmental Engineer'
+    ],
+    topRecruiters: [
+      'Reliance Industries',
+      'ONGC',
+      'GAIL',
+      'Indian Oil',
+      'BASF',
+      'Dr. Reddy’s'
+    ],
+    higherStudies: [
+      'M.Tech in Chemical Engineering',
+      'MS in Material Science',
+      'PhD in Chemical Processes',
+      'MBA in Operations/Production'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Fundamentals of Chemistry', duration: '6 months', skills: ['Organic', 'Physical Chemistry'] },
+      { title: 'Engineering Basics', duration: '6 months', skills: ['Thermodynamics', 'Fluid Flow'] }
+    ],
+    intermediate: [
+      { title: 'Reaction Engineering & Process Control', duration: '1 year', skills: ['Chemical Kinetics', 'Instrumentation'] },
+      { title: 'Material Science', duration: '6 months', skills: ['Polymers', 'Nanomaterials'] }
+    ],
+    advanced: [
+      { title: 'Petrochemical & Pharmaceutical Engineering', duration: '1 year', skills: ['Refineries', 'Drug Manufacturing'] },
+      { title: 'Environmental Safety', duration: '6 months', skills: ['Sustainability', 'Pollution Control'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Projects', 'Collaboration'] }
+    ]
+  }
+},
+
+'aerospace': {
+  title: 'Aerospace Engineering',
+  description: 'Aircraft, spacecraft, propulsion, and aerodynamics.',
+  averageSalary:'₹4,00,000 - ₹15,00,000',
+  jobGrowth:'9%',
+  content: {
+    overview: 'Aerospace engineering deals with designing and developing aircraft, spacecraft, and propulsion systems. It combines aerodynamics, materials, and control systems.',
+    skills: [
+      'Aerodynamics',
+      'Aircraft Structures',
+      'Propulsion Systems',
+      'Flight Mechanics',
+      'Avionics',
+      'Control Systems'
+    ],
+    careerOptions: [
+      'Aerospace Engineer',
+      'Avionics Engineer',
+      'Propulsion Engineer',
+      'Aircraft Design Engineer',
+      'Space Research Scientist'
+    ],
+    topRecruiters: [
+      'HAL',
+      'ISRO',
+      'DRDO',
+      'NASA',
+      'Airbus',
+      'Boeing'
+    ],
+    higherStudies: [
+      'M.Tech in Aerospace/Aeronautical Engineering',
+      'MS in Aeronautics/Space Science',
+      'PhD in Propulsion/Space Systems',
+      'MBA in Aviation Management'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Engineering Fundamentals', duration: '6 months', skills: ['Physics', 'Mathematics', 'Mechanics'] },
+      { title: 'Basics of Aerodynamics', duration: '6 months', skills: ['Airflow', 'Lift', 'Drag'] }
+    ],
+    intermediate: [
+      { title: 'Aircraft Structures & Propulsion', duration: '1 year', skills: ['Engines', 'Materials'] },
+      { title: 'Flight Dynamics & Avionics', duration: '6 months', skills: ['Control Systems', 'Navigation'] }
+    ],
+    advanced: [
+      { title: 'Space Technology & Rocket Propulsion', duration: '1 year', skills: ['Rocket Engines', 'Orbital Mechanics'] },
+      { title: 'Aircraft Design Projects', duration: '6 months', skills: ['CAD for Aerospace', 'Simulation'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['ISRO/DRDO Projects', 'Collaboration'] }
+    ]
+  }
+},'mining': {
+  title: 'Mining Engineering',
+  description:'Mining, geology, extraction tech',
+  averageSalary:'₹3,00,000 - ₹12,00,000',
+  jobGrowth:'3%',
+  content: {
+    overview: 'Mining engineering deals with extracting minerals, ores, and fossil fuels efficiently and sustainably, while focusing on safety and environmental impact.',
+    skills: [
+      'Geology & Mineral Exploration',
+      'Mining Methods',
+      'Mine Planning & Design',
+      'Rock Mechanics',
+      'Safety Engineering',
+      'Environmental Management'
+    ],
+    careerOptions: [
+      'Mining Engineer',
+      'Geologist',
+      'Drilling Engineer',
+      'Safety Engineer',
+      'Mine Planner'
+    ],
+    topRecruiters: [
+      'Coal India',
+      'NMDC',
+      'Vedanta',
+      'Hindustan Zinc',
+      'Tata Steel',
+      'Adani Mining'
+    ],
+    higherStudies: [
+      'M.Tech in Mining Engineering',
+      'MS in Geology/Earth Sciences',
+      'PhD in Mining/Georesources',
+      'MBA in Operations/Resource Management'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Geology', duration: '6 months', skills: ['Earth Science', 'Minerals'] },
+      { title: 'Introduction to Mining', duration: '6 months', skills: ['Mining Methods', 'Exploration Techniques'] }
+    ],
+    intermediate: [
+      { title: 'Mine Planning & Surveying', duration: '1 year', skills: ['CAD', 'Survey Tools'] },
+      { title: 'Rock Mechanics & Safety', duration: '6 months', skills: ['Support Systems', 'Risk Assessment'] }
+    ],
+    advanced: [
+      { title: 'Advanced Mining Technology', duration: '1 year', skills: ['Automation', 'Sustainable Mining'] },
+      { title: 'Environmental Mining Practices', duration: '6 months', skills: ['Rehabilitation', 'Waste Management'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Exposure', 'Teamwork'] }
+    ]
+  }
+},
+
+'marine': {
+  title: 'Marine Engineering',
+  description:'Ships, ocean tech, naval systems',
+  averageSalary:'₹4,00,000 - ₹15,00,000',
+  jobGrowth:'5%',
+  content: {
+    overview: 'Marine engineering involves the design, construction, and maintenance of ships, submarines, and marine structures.',
+    skills: [
+      'Naval Architecture',
+      'Marine Propulsion',
+      'Fluid Mechanics',
+      'Ship Design',
+      'Ocean Engineering',
+      'Control Systems'
+    ],
+    careerOptions: [
+      'Marine Engineer',
+      'Naval Architect',
+      'Port Engineer',
+      'Shipyard Engineer',
+      'Ocean Engineer'
+    ],
+    topRecruiters: [
+      'Indian Navy',
+      'Cochin Shipyard',
+      'Mazagon Dock',
+      'L&T Shipbuilding',
+      'Oil & Natural Gas Companies'
+    ],
+    higherStudies: [
+      'M.Tech in Marine/Ocean Engineering',
+      'MS in Naval Architecture',
+      'PhD in Marine Structures',
+      'MBA in Shipping Management'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Engineering Fundamentals', duration: '6 months', skills: ['Physics', 'Thermodynamics'] },
+      { title: 'Basics of Marine Engineering', duration: '6 months', skills: ['Ship Mechanics', 'Hydrodynamics'] }
+    ],
+    intermediate: [
+      { title: 'Marine Propulsion Systems', duration: '1 year', skills: ['Diesel Engines', 'Gas Turbines'] },
+      { title: 'Naval Architecture', duration: '6 months', skills: ['Hull Design', 'CAD Tools'] }
+    ],
+    advanced: [
+      { title: 'Advanced Ocean Technology', duration: '1 year', skills: ['Submarines', 'Offshore Platforms'] },
+      { title: 'Marine Safety & Sustainability', duration: '6 months', skills: ['Pollution Control', 'Energy Efficiency'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Shipyard Training', 'Industry Exposure'] }
+    ]
+  }
+},
+
+'petroleum': {
+  title: 'Petroleum Engineering',
+  description:'Oil, gas, drilling, energy systems',
+  averageSalary:'₹5,00,000 - ₹20,00,000',
+  jobGrowth:'4%',
+  content: {
+    overview: 'Petroleum engineering focuses on exploration, drilling, and production of oil and natural gas while developing sustainable energy solutions.',
+    skills: [
+      'Geology & Reservoir Engineering',
+      'Drilling Technology',
+      'Petroleum Production',
+      'Pipeline Design',
+      'Energy Management',
+      'Safety & Environment'
+    ],
+    careerOptions: [
+      'Petroleum Engineer',
+      'Reservoir Engineer',
+      'Drilling Engineer',
+      'Production Engineer',
+      'Energy Analyst'
+    ],
+    topRecruiters: [
+      'ONGC',
+      'Reliance Petroleum',
+      'Shell',
+      'ExxonMobil',
+      'Cairn Energy',
+      'BPCL'
+    ],
+    higherStudies: [
+      'M.Tech in Petroleum Engineering',
+      'MS in Energy Systems',
+      'PhD in Oil & Gas Studies',
+      'MBA in Energy Management'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Geology & Chemistry', duration: '6 months', skills: ['Petroleum Basics', 'Earth Science'] },
+      { title: 'Introduction to Petroleum Engineering', duration: '6 months', skills: ['Drilling Basics', 'Oilfield Equipment'] }
+    ],
+    intermediate: [
+      { title: 'Reservoir & Drilling Engineering', duration: '1 year', skills: ['Well Logging', 'Drilling Fluids'] },
+      { title: 'Production Systems', duration: '6 months', skills: ['Pipeline Flow', 'Gas Processing'] }
+    ],
+    advanced: [
+      { title: 'Advanced Energy Systems', duration: '1 year', skills: ['Enhanced Oil Recovery', 'Unconventional Energy'] },
+      { title: 'Safety & Sustainability', duration: '6 months', skills: ['Hazard Management', 'Green Energy'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Projects', 'Oilfield Training'] }
+    ]
+  }
+},
+
+'metallurgy': {
+  title: 'Metallurgical Engineering',
+  description:'Metals, materials, alloys',
+  averageSalary:'₹3,20,000 - ₹12,00,000',
+  jobGrowth:'4%',
+  content: {
+    overview: 'Metallurgical engineering deals with extracting, processing, and developing metals and alloys for industrial applications.',
+    skills: [
+      'Physical & Mechanical Metallurgy',
+      'Material Science',
+      'Heat Treatment',
+      'Casting & Welding',
+      'Nanomaterials',
+      'Failure Analysis'
+    ],
+    careerOptions: [
+      'Metallurgical Engineer',
+      'Materials Scientist',
+      'Welding Engineer',
+      'Quality Control Engineer',
+      'Research Scientist'
+    ],
+    topRecruiters: [
+      'SAIL',
+      'Tata Steel',
+      'JSW',
+      'NALCO',
+      'Hindalco',
+      'DRDO'
+    ],
+    higherStudies: [
+      'M.Tech in Metallurgy/Materials Science',
+      'MS in Advanced Materials',
+      'PhD in Metallurgical Research',
+      'MBA in Operations'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Chemistry & Physics', duration: '6 months', skills: ['Atomic Structure', 'Bonding'] },
+      { title: 'Introduction to Metallurgy', duration: '6 months', skills: ['Iron & Steel Basics', 'Alloys'] }
+    ],
+    intermediate: [
+      { title: 'Heat Treatment & Mechanical Metallurgy', duration: '1 year', skills: ['Hardening', 'Strengthening'] },
+      { title: 'Casting & Welding', duration: '6 months', skills: ['Foundry', 'Welding Processes'] }
+    ],
+    advanced: [
+      { title: 'Nanomaterials & Advanced Alloys', duration: '1 year', skills: ['Smart Materials', 'Composites'] },
+      { title: 'Failure Analysis & Corrosion', duration: '6 months', skills: ['Durability Testing', 'Surface Engineering'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industrial Practice', 'R&D'] }
+    ]
+  }
+},
+
+'agri': {
+  title: 'Agricultural Engineering',
+  description:'Farming, irrigation, agri-tech',
+  averageSalary:'₹3,00,000 - ₹10,00,000',
+  jobGrowth:'7%',
+  content: {
+    overview: 'Agricultural engineering integrates technology with farming to improve efficiency, sustainability, and food production.',
+    skills: [
+      'Soil Science',
+      'Irrigation Systems',
+      'Farm Machinery',
+      'Food Technology',
+      'Renewable Energy in Agriculture',
+      'GIS & Remote Sensing'
+    ],
+    careerOptions: [
+      'Agricultural Engineer',
+      'Irrigation Engineer',
+      'Food Technologist',
+      'Farm Equipment Designer',
+      'Environmental Engineer'
+    ],
+    topRecruiters: [
+      'ICAR',
+      'Mahindra Agritech',
+      'John Deere',
+      'Syngenta',
+      'Amul',
+      'Government Agriculture Departments'
+    ],
+    higherStudies: [
+      'M.Tech in Agricultural Engineering',
+      'MS in Food Tech/Agri Systems',
+      'PhD in Agri-Tech',
+      'MBA in Agribusiness'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Agriculture & Biology', duration: '6 months', skills: ['Soil Science', 'Plant Biology'] },
+      { title: 'Fundamentals of Engineering', duration: '6 months', skills: ['Mechanics', 'Thermodynamics'] }
+    ],
+    intermediate: [
+      { title: 'Farm Machinery & Irrigation', duration: '1 year', skills: ['Tractors', 'Sprinklers'] },
+      { title: 'Food Processing Technology', duration: '6 months', skills: ['Storage', 'Preservation'] }
+    ],
+    advanced: [
+      { title: 'Precision Agriculture', duration: '1 year', skills: ['IoT in Farming', 'GIS Mapping'] },
+      { title: 'Renewable Energy in Agriculture', duration: '6 months', skills: ['Solar Pumps', 'Biogas'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Research', 'Industry Practice'] }
+    ]
+  }
+},
+
+'biomed': {
+  title: 'Biomedical Engineering',
+  description:'Medical devices, prosthetics, health tech',
+  averageSalary:'₹4,00,000 - ₹15,00,000',
+  jobGrowth:'12%',
+  content: {
+    overview: 'Biomedical engineering applies engineering principles to medicine and healthcare, focusing on medical devices, prosthetics, and healthcare technology.',
+    skills: [
+      'Human Anatomy',
+      'Medical Imaging',
+      'Biomechanics',
+      'Prosthetics Design',
+      'Biomaterials',
+      'Signal Processing'
+    ],
+    careerOptions: [
+      'Biomedical Engineer',
+      'Medical Device Designer',
+      'Clinical Engineer',
+      'Rehabilitation Engineer',
+      'Research Scientist'
+    ],
+    topRecruiters: [
+      'Siemens Healthineers',
+      'GE Healthcare',
+      'Philips',
+      'Medtronic',
+      'Johnson & Johnson',
+      'Hospitals & Research Labs'
+    ],
+    higherStudies: [
+      'M.Tech in Biomedical Engineering',
+      'MS in Bioinstrumentation',
+      'PhD in Healthcare Tech',
+      'MBA in Healthcare Management'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Biology & Anatomy', duration: '6 months', skills: ['Human Systems', 'Cell Biology'] },
+      { title: 'Introduction to Biomedical Engineering', duration: '6 months', skills: ['Medical Devices', 'Healthcare Basics'] }
+    ],
+    intermediate: [
+      { title: 'Biomechanics & Prosthetics', duration: '1 year', skills: ['Artificial Limbs', 'Rehabilitation'] },
+      { title: 'Medical Imaging Systems', duration: '6 months', skills: ['X-Ray', 'MRI', 'Ultrasound'] }
+    ],
+    advanced: [
+      { title: 'Biomaterials & Healthcare Tech', duration: '1 year', skills: ['Nanotech in Medicine', 'Implants'] },
+      { title: 'Healthcare Data & Signal Processing', duration: '6 months', skills: ['Medical AI', 'Wearable Tech'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Hospital Training', 'Research Work'] }
+    ]
+  }
+},
+
+'textile': {
+  title: 'Textile Engineering',
+  description:'Textiles, fabrics, fashion tech',
+  averageSalary:'₹3,00,000 - ₹9,00,000',
+  jobGrowth:'3%',
+  content: {
+    overview: 'Textile engineering involves the design, production, and testing of fibers, fabrics, and garments with applications in fashion and technical textiles.',
+    skills: [
+      'Fiber Science',
+      'Yarn & Fabric Production',
+      'Textile Chemistry',
+      'Garment Manufacturing',
+      'Quality Control',
+      'Fashion Technology'
+    ],
+    careerOptions: [
+      'Textile Engineer',
+      'Fashion Technologist',
+      'Quality Control Engineer',
+      'Textile Chemist',
+      'Apparel Designer'
+    ],
+    topRecruiters: [
+      'Raymond',
+      'Arvind Mills',
+      'Reliance Textiles',
+      'Fabindia',
+      'Aditya Birla Group',
+      'Export Houses'
+    ],
+    higherStudies: [
+      'M.Tech in Textile Engineering',
+      'MS in Fashion Technology',
+      'PhD in Textile Chemistry',
+      'MBA in Fashion Management'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Fiber Science & Basics', duration: '6 months', skills: ['Cotton', 'Synthetic Fibers'] },
+      { title: 'Textile Manufacturing Basics', duration: '6 months', skills: ['Weaving', 'Knitting'] }
+    ],
+    intermediate: [
+      { title: 'Fabric Production & Dyeing', duration: '1 year', skills: ['Dyeing Processes', 'Printing'] },
+      { title: 'Garment Tech', duration: '6 months', skills: ['Apparel Design', 'CAD for Fashion'] }
+    ],
+    advanced: [
+      { title: 'Technical Textiles & Innovations', duration: '1 year', skills: ['Smart Fabrics', 'Protective Gear'] },
+      { title: 'Quality Control & Sustainability', duration: '6 months', skills: ['Eco-friendly Fabrics', 'Waste Reduction'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Industry Training', 'Export Projects'] }
+    ]
+  }
+},
+
+'environmental': {
+  title: 'Environmental Engineering',
+  description:'Environment, pollution control, sustainability',
+  averageSalary:'₹3,20,000 - ₹12,00,000',
+  jobGrowth:'8%',
+  content: {
+    overview: 'Environmental engineering focuses on developing solutions to environmental problems such as pollution, waste management, and sustainable infrastructure.',
+    skills: [
+      'Water & Wastewater Treatment',
+      'Air Pollution Control',
+      'Solid Waste Management',
+      'Environmental Impact Assessment',
+      'Renewable Energy',
+      'Sustainability Engineering'
+    ],
+    careerOptions: [
+      'Environmental Engineer',
+      'Pollution Control Engineer',
+      'Sustainability Consultant',
+      'Waste Management Engineer',
+      'Research Scientist'
+    ],
+    topRecruiters: [
+      'NEERI',
+      'CPCB',
+      'Tata Consulting Engineers',
+      'AECOM',
+      'Jacobs Engineering',
+      'Government Agencies'
+    ],
+    higherStudies: [
+      'M.Tech in Environmental Engineering',
+      'MS in Sustainability Studies',
+      'PhD in Environmental Science',
+      'MBA in Energy & Sustainability'
+    ]
+  },
+  roadmap: {
+    beginner: [
+      { title: 'Basics of Environmental Science', duration: '6 months', skills: ['Ecology', 'Pollution Basics'] },
+      { title: 'Engineering Fundamentals', duration: '6 months', skills: ['Fluid Mechanics', 'Chemistry'] }
+    ],
+    intermediate: [
+      { title: 'Water & Air Pollution Control', duration: '1 year', skills: ['Treatment Plants', 'Emission Control'] },
+      { title: 'Solid Waste Management', duration: '6 months', skills: ['Landfills', 'Recycling'] }
+    ],
+    advanced: [
+      { title: 'Renewable Energy Systems', duration: '1 year', skills: ['Solar', 'Wind', 'Biogas'] },
+      { title: 'Environmental Impact Assessment', duration: '6 months', skills: ['Policy', 'Sustainability Practices'] },
+      { title: 'Final Year Project + Internship', duration: '6 months', skills: ['Consulting Projects', 'Research'] }
+    ]
+  }
+}
+
+
+
+    // 👉 Repeat the same structure for EEE, Mech, Civil, Aero, Auto, Bio, Chem, Mining, Marine, Petroleum, Metallurgy, Agri, Biomed, Textile, Environmental
+  }
+},
+'medical-doctor': {
+  title: 'Medical Doctor (MBBS/MD)',
+  icon: 'stethoscope',
+  color: 'bg-gradient-to-r from-red-500 to-pink-600',
+  description: 'Medical profession with multiple specializations.',
+  averageSalary: '₹5,00,000 - ₹35,00,000+',
+  jobGrowth: '15% (High demand)',
+  hasSubcategories: true,
+  subcategories: {
+    'general': {
+      title: 'General Physician',
+      description: 'Primary healthcare, diagnosing common illnesses, preventive care and referrals.',
+      averageSalary: '₹5,00,000 - ₹15,00,000',
+      jobGrowth: '12%',
+      content: {
+        overview:
+          "General physicians (family doctors, primary care physicians) provide first-contact, continuous and comprehensive care. They manage acute and chronic illnesses, coordinate care with specialists, offer preventive care and counselling, and often act as the patient's long-term care provider. A successful general physician blends clinical knowledge with communication, empathy and systems awareness.",
+        skills: [
+          'Clinical history taking & physical examination',
+          'Clinical reasoning and differential diagnosis',
+          'Basic procedural skills (suturing, IV lines, basic emergency care)',
+          'Patient communication and counselling',
+          'Prescribing & pharmacology basics',
+          'Record-keeping & primary care workflows'
+        ],
+        careerOptions: [
+          'Private clinic practice',
+          'Outpatient departments (OPD) in hospitals',
+          'Community health centers / government primary care',
+          'Telemedicine practice',
+          'Occupational health physician'
+        ],
+        topRecruiters: [
+          'Government hospitals & PHCs',
+          'Multi-specialty hospitals (Apollo, Fortis, Max etc.)',
+          'Corporate clinics and telemedicine platforms',
+          'NGOs and public health programmes'
+        ],
+        higherStudies: [
+          'MD (Community Medicine) / DNB Family Medicine',
+          'Diploma courses in Family Medicine or Public Health',
+          'Fellowships in primary care/geriatrics/palliative care'
+        ],
+        recommendedCertifications: [
+          'Basic Life Support (BLS) / Advanced Cardiac Life Support (ACLS)',
+          'Public health / epidemiology short courses'
+        ],
+        practicalTips:
+          'During MBBS and internship, focus on clinical exposure, OPD postings, and basic procedures. Networking and local community work build patient base for future private practice.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS (UG Training)', duration: '5.5 years (incl. 1 year internship)', skills: ['Basic clinical skills', 'Anatomy/Physiology/Pharmacology', 'OPD exposure'] },
+          { title: 'Early Internship Rotations', duration: '6-12 months', skills: ['Acute care basics', 'emergency response', 'primary clinical procedures'] }
+        ],
+        intermediate: [
+          { title: 'Work as Junior Doctor / Medical Officer', duration: '1-3 years', skills: ['OPD management', 'prescription writing', 'chronic disease follow-up'] },
+          { title: 'Optional PG / Diploma (Family Medicine)', duration: '2-3 years', skills: ['community health', 'family medicine protocols'] }
+        ],
+        advanced: [
+          { title: 'Establish Practice or Senior Position', duration: 'ongoing', skills: ['clinic management', 'patient retention', 'referral networks'] },
+          { title: 'Continuous Medical Education', duration: 'ongoing', skills: ['update protocols', 'special interest training'] }
+        ]
+      }
+    },
+
+    'surgeon': {
+      title: 'Surgeon (General / Specialist)',
+      description: 'Operative treatment across trauma, elective surgery and subspecialties (neuro, cardio, ortho etc.).',
+      averageSalary: '₹8,00,000 - ₹35,00,000+',
+      jobGrowth: '18%',
+      content: {
+        overview:
+          "Surgeons diagnose conditions requiring operative management and plan, perform and follow-up surgical procedures. Becoming a competent surgeon requires excellent hand skills, decision-making under pressure, thorough anatomical knowledge and years of supervised operative training. Many surgeons sub-specialize (cardiothoracic, neurosurgery, orthopaedics, pediatric surgery, etc.) which increases expertise and earning potential.",
+        skills: [
+          'Aseptic technique & sterile procedures',
+          'Surgical anatomy & operative techniques',
+          'Pre-op & post-op care',
+          'Teamwork in OT (anesthetist, nurses)',
+          'Emergency surgical decision-making',
+          'Microsurgery / specialized procedural skills (as per specialty)'
+        ],
+        careerOptions: [
+          'General surgeon in hospitals',
+          'Specialist surgeon (Orthopedics, Neurosurgery, Cardio, Pediatric, etc.) after higher training',
+          'Trauma center surgeon',
+          'Academic surgeon / surgical trainer'
+        ],
+        topRecruiters: [
+          'Tertiary care hospitals (Apollo, Fortis, Max, etc.)',
+          'Government medical colleges & teaching hospitals',
+          'Specialty surgical centers and trauma hospitals'
+        ],
+        higherStudies: [
+          'MS General Surgery / DNB General Surgery',
+          'MCh (neurosurgery, cardiothoracic, surgical oncology) or DM (for some)',
+          'Fellowships in subspecialties (laparoscopic, transplant, trauma surgery)'
+        ],
+        recommendedCertifications: ['ATLS (Advanced Trauma Life Support)', 'BLS/ACLS', 'laparoscopy courses'],
+        practicalTips:
+          'Surgical skill builds via supervised theatre exposure; logbook of procedures during residency is critical. Focus on incremental responsibility and fellowships for niche areas.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic surgical rotations', 'emergency suturing'] },
+          { title: 'Residency Entrance', duration: 'Varies (NEET-PG)', skills: ['exam preparation', 'clinical revision'] }
+        ],
+        intermediate: [
+          { title: 'MS General Surgery / DNB', duration: '3 years', skills: ['operative experience', 'trauma management', 'post-op care'] },
+          { title: 'Subspecialty Fellowships / Senior Residency', duration: '1-3 years', skills: ['advanced surgical techniques', 'OT leadership'] }
+        ],
+        advanced: [
+          { title: 'MCh / Specialist Practice', duration: 'ongoing', skills: ['complex surgery', 'research & teaching'] },
+          { title: 'Set up private practice / senior consultant role', duration: 'ongoing', skills: ['practice management', 'quality protocols'] }
+        ]
+      }
+    },
+
+    'pediatrician': {
+      title: 'Pediatrician',
+      description: 'Child health from neonates to adolescents—diagnosis, immunizations, growth and development care.',
+      averageSalary: '₹6,00,000 - ₹18,00,000',
+      jobGrowth: '14%',
+      content: {
+        overview:
+          'Pediatricians specialize in medical care for infants, children and adolescents. They are trained to identify developmental, congenital and infectious conditions early and manage vaccinations and preventive health. Pediatric care often involves strong communication with families and coordination with allied specialties (neonatology, pediatric surgery).',
+        skills: [
+          'Neonatal/infant assessment & resuscitation',
+          'Growth & developmental monitoring',
+          'Immunization schedules',
+          'Management of childhood infections & chronic paediatric illnesses',
+          'Family counselling & parental education'
+        ],
+        careerOptions: ['Hospital pediatrician', 'Neonatologist (with further specialization)', 'Private pediatric clinic', 'Community child health programs', 'Research/clinical trials in pediatrics'],
+        topRecruiters: ['Children’s hospitals', 'Government hospitals', 'Private multi-specialty hospitals', 'NGOs focusing on child health'],
+        higherStudies: ['MD Pediatrics', 'DM Neonatology (for neonatal specialization)', 'Fellowships in pediatric subspecialties'],
+        recommendedCertifications: ['Neonatal resuscitation', 'Pediatric advanced life support'],
+        practicalTips:
+          'Strong OPD exposure in MBBS/internship helps decide pediatrics. Parents’ communication skills and patience are key in this field.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship with pediatric postings', duration: '5.5 years', skills: ['basic child clinical skills'] },
+          { title: 'NEET-PG and application for pediatric residency', duration: '6-12 months', skills: ['exam study', 'practical exposure'] }
+        ],
+        intermediate: [
+          { title: 'MD Pediatrics', duration: '3 years', skills: ['neonatal care', 'pediatric subspecialties'] },
+          { title: 'Subspecialty training (optional)', duration: '1-2 years', skills: ['cardiology/neonatology/ICU'] }
+        ],
+        advanced: [
+          { title: 'Senior Consultant / Private Practice', duration: 'ongoing', skills: ['clinic management', 'research & teaching'] },
+          { title: 'Leadership in child health programmes', duration: 'ongoing', skills: ['program design', 'policy inputs'] }
+        ]
+      }
+    },
+
+    'cardiologist': {
+      title: 'Cardiologist',
+      description: 'Diagnosis and management of heart diseases, interventional procedures and long-term cardiac care.',
+      averageSalary: '₹10,00,000 - ₹35,00,000+',
+      jobGrowth: '20%',
+      content: {
+        overview:
+          'Cardiologists diagnose, medically manage and sometimes intervene (if interventional cardiology) in cardiac conditions — from hypertension and coronary artery disease to heart failure and arrhythmias. A cardiology career usually requires general medicine training followed by superspecialty training in cardiology.',
+        skills: [
+          'Clinical cardiology evaluation (ECG, echo interpretation)',
+          'Coronary care and heart failure management',
+          'Interventional techniques (angioplasty) for interventional cardiologists',
+          'Non-invasive imaging (echo, stress testing, CT/MRI cardiac) knowledge',
+          'Critical care for cardiac emergencies'
+        ],
+        careerOptions: [
+          'Interventional cardiologist',
+          'Clinical cardiologist in tertiary hospitals',
+          'Cardiac ICU consultant',
+          'Private specialized cardiac practice'
+        ],
+        topRecruiters: ['Tertiary cardiac centers', 'Private multi-specialty hospitals', 'Cardiac research centers'],
+        higherStudies: ['MD (Internal Medicine) -> DM Cardiology', 'DNB Cardiology', 'Fellowships (interventional cardiology, electrophysiology)'],
+        recommendedCertifications: ['Advanced cardiac life support', 'Echo certification courses'],
+        practicalTips:
+          'Cardiology requires long training years; focus on internal medicine excellence then competitive DM/DNB cardiology entrance and strong ICU experience.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic clinical experience'] },
+          { title: 'MD/Internal Medicine or Pediatrics (for pediatric cardiology entry)', duration: '3 years', skills: ['inpatient care', 'ICU experience'] }
+        ],
+        intermediate: [
+          { title: 'DM Cardiology / DNB Cardiology', duration: '3 years', skills: ['echo & cath-lab exposure', 'cardiac ICU'] },
+          { title: 'Fellowship (Interventional / Electrophysiology)', duration: '1-2 years', skills: ['angioplasty','stent placement','EP procedures'] }
+        ],
+        advanced: [
+          { title: 'Consultant / Senior Specialist', duration: 'ongoing', skills: ['complex cardiac care', 'research & leadership'] },
+          { title: 'Run specialized cardiac centre or lab', duration: 'ongoing', skills: ['team management','quality control'] }
+        ]
+      }
+    },
+
+    'dermatologist': {
+      title: 'Dermatologist',
+      description: 'Skin, hair, nail and cosmetic procedures; medical and surgical dermatology.',
+      averageSalary: '₹7,00,000 - ₹20,00,000',
+      jobGrowth: '16%',
+      content: {
+        overview:
+          'Dermatologists manage a wide range of skin, hair and nail disorders and provide cosmetic dermatology services (laser therapy, fillers). The specialty combines clinical dermatology, minor surgery and procedural cosmetic techniques.',
+        skills: [
+          'Diagnosis of dermatological conditions',
+          'Dermatoscopy and skin biopsy techniques',
+          'Cosmetic procedures (peels, lasers, injections)',
+          'Allergy & immunology knowledge related to skin',
+          'Patient counselling for cosmetic expectations'
+        ],
+        careerOptions: ['Clinical dermatologist', 'Cosmetic dermatology clinic', 'Dermatologic surgery', 'Academia and research'],
+        topRecruiters: ['Dermatology clinics', 'Aesthetic & cosmetic centres', 'Hospitals with dermatology depts'],
+        higherStudies: ['MD Dermatology', 'DNB Dermatology', 'Fellowships in cosmetic dermatology / trichology'],
+        recommendedCertifications: ['Laser & cosmetic procedure certifications'],
+        practicalTips:
+          'Good visual diagnosis skill and dermatopathology knowledge helps. Cosmetic practice requires business skills and patient trust.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship with Dermatology exposure', duration: '5.5 years', skills: ['skin lesion recognition', 'basic derm procedures'] }
+        ],
+        intermediate: [
+          { title: 'MD/DNB Dermatology', duration: '3 years', skills: ['skin surgeries','laser training','medical dermatology'] }
+        ],
+        advanced: [
+          { title: 'Private Clinic / Cosmetic Practice', duration: 'ongoing', skills: ['marketing','clinic management','advanced procedures'] },
+          { title: 'Research & Teaching Roles', duration: 'ongoing', skills: ['publications','lectures'] }
+        ]
+      }
+    },
+
+    'orthopedic': {
+      title: 'Orthopedic Doctor',
+      description: 'Bones, joints, trauma management, joint replacement, sports medicine.',
+      averageSalary: '₹8,00,000 - ₹25,00,000',
+      jobGrowth: '15%',
+      content: {
+        overview:
+          'Orthopedic surgeons treat musculoskeletal system problems including trauma, degenerative joint disease, congenital deformities and sports injuries. The specialty requires robust surgical skill, trauma management capability and knowledge of rehabilitation.',
+        skills: [
+          'Fracture fixation & orthopedic surgical techniques',
+          'Joint replacement procedures',
+          'Arthroscopy and minimally invasive techniques',
+          'Rehabilitation planning',
+          'Sports injury management'
+        ],
+        careerOptions: ['Orthopedic surgeon', 'Sports medicine specialist', 'Trauma surgeon', 'Joint replacement specialist'],
+        topRecruiters: ['Orthopedic centers', 'Sports medicine clinics', 'Hospitals & trauma centres'],
+        higherStudies: ['MS Orthopedics / DNB Orthopedics', 'Fellowships in arthroplasty, sports medicine'],
+        recommendedCertifications: ['AO trauma courses', 'arthroscopy workshops'],
+        practicalTips:
+          'High volume of operative exposure during residency is crucial. Networking with physiotherapy and rehab teams builds good outcomes.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic trauma care','orthopedic ward postings'] }
+        ],
+        intermediate: [
+          { title: 'MS Orthopaedics', duration: '3 years', skills: ['operation theatre skills','fracture management','joint surgeries'] }
+        ],
+        advanced: [
+          { title: 'Fellowship / Senior Consultant', duration: '1-3 years', skills: ['arthroplasty','revision surgeries','sports medicine'] },
+          { title: 'Private practice or head of orthopedics', duration: 'ongoing', skills: ['team leadership','patient pathway management'] }
+        ]
+      }
+    },
+
+    'gynecologist': {
+      title: 'Gynecologist / Obstetrician',
+      description: 'Women’s health, pregnancy care, obstetric and gynecological surgeries.',
+      averageSalary: '₹8,00,000 - ₹28,00,000',
+      jobGrowth: '17%',
+      content: {
+        overview:
+          'Gynecologists and obstetricians care for women through reproductive years: pregnancy, childbirth, contraception, fertility issues and gynecologic surgery. The role requires obstetric emergency competence, surgical skills and empathy in managing sensitive health matters.',
+        skills: [
+          'Antenatal & intrapartum care',
+          'Cesarean & gynecologic surgeries',
+          'Fertility & reproductive endocrinology basics',
+          'Ultrasound & fetal monitoring',
+          'Counselling on reproductive health'
+        ],
+        careerOptions: ['Obstetrician / gynecologist', 'High-risk pregnancy specialist', 'Fertility clinic physician', 'Laparoscopic gynecologic surgeon'],
+        topRecruiters: ['Maternity hospitals', 'Fertility centres', 'Multi-speciality hospitals'],
+        higherStudies: ['MS (OB/GYN) / DNB', 'Fellowships in maternal-fetal medicine / reproductive medicine'],
+        recommendedCertifications: ['Advanced obstetric life support', 'laparoscopy workshops'],
+        practicalTips:
+          'Exposure to deliveries, antenatal clinics and gynecological surgeries during residency is important. Empathy and counselling skills are crucial.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship with OBGYN exposure', duration: '5.5 years', skills: ['basic deliveries','antenatal care'] }
+        ],
+        intermediate: [
+          { title: 'MS Obstetrics & Gynecology', duration: '3 years', skills: ['C-section procedures','laparoscopy','maternal health'] }
+        ],
+        advanced: [
+          { title: 'Fellowships in fertility/high-risk obstetrics', duration: '1-2 years', skills: ['IVF basics','maternal-fetal medicine'] },
+          { title: 'Senior consultant / clinic', duration: 'ongoing', skills: ['private practice management','team leadership'] }
+        ]
+      }
+    },
+
+    'neurologist': {
+      title: 'Neurologist',
+      description: 'Diagnosis and medical management of disorders of the nervous system (stroke, epilepsy, degenerative diseases).',
+      averageSalary: '₹12,00,000 - ₹40,00,000+',
+      jobGrowth: '19%',
+      content: {
+        overview:
+          'Neurologists evaluate and treat conditions of the brain, spinal cord, nerves and muscles. The field often interfaces with neurosurgery for surgical cases and requires strong diagnostic acumen using imaging and electrophysiology.',
+        skills: [
+          'Neurological examination & localization',
+          'Interpretation of neuroimaging (MRI/CT)',
+          'EEG/NCS interpretation',
+          'Stroke management & ICU neurology',
+          'Neurodegenerative disease management'
+        ],
+        careerOptions: ['Clinical neurologist', 'Stroke specialist', 'Neurocritical care', 'Academic neurology / research'],
+        topRecruiters: ['Tertiary neurology centres', 'Multi-specialty hospitals', 'Neuro-research institutes'],
+        higherStudies: ['MD (Internal Medicine) -> DM Neurology', 'DNB Neurology', 'Fellowships in stroke/epilepsy/ICU neurology'],
+        recommendedCertifications: ['Neuro ICU training', 'EEG courses'],
+        practicalTips:
+          'Neurology demands detailed bedside skills and familiarity with investigations. Fellowships in stroke or epilepsy improve employability.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic neuroclinical skills'] },
+          { title: 'MD Internal Medicine (or Pediatrics for paediatric neurology)', duration: '3 years', skills: ['general medicine competency'] }
+        ],
+        intermediate: [
+          { title: 'DM Neurology / DNB Neurology', duration: '3 years', skills: ['advanced neurodiagnostics','stroke management'] }
+        ],
+        advanced: [
+          { title: 'Subspecialty Fellowships', duration: '1-2 years', skills: ['epilepsy surgery prep','movement disorders','neurocritical care'] },
+          { title: 'Consultant / researcher', duration: 'ongoing', skills: ['clinical trials','publications'] }
+        ]
+      }
+    },
+
+    'psychiatrist': {
+      title: 'Psychiatrist',
+      description: 'Mental health diagnosis and treatment including psychotherapy, psychopharmacology and community mental health.',
+      averageSalary: '₹9,00,000 - ₹25,00,000',
+      jobGrowth: '18%',
+      content: {
+        overview:
+          'Psychiatrists are medical specialists for mental illnesses — depression, bipolar disorder, psychosis, anxiety disorders, addictions — using medicines and psychotherapy. The role blends medical, psychological and social approaches.',
+        skills: [
+          'Diagnostic assessment of mental disorders',
+          'Psychopharmacology',
+          'Psychotherapy basics (CBT, supportive therapy)',
+          'Crisis intervention and suicide risk assessment',
+          'Addiction medicine'
+        ],
+        careerOptions: ['Clinical psychiatrist in hospitals', 'Child & adolescent psychiatry', 'Addiction clinics', 'Consultation-liaison psychiatry', 'Telepsychiatry'],
+        topRecruiters: ['Mental health institutes', 'Hospitals', 'Rehabilitation centres', 'Corporate mental health programs'],
+        higherStudies: ['MD Psychiatry', 'DNB Psychiatry', 'Fellowships in child/adolescent or addiction psychiatry'],
+        recommendedCertifications: ['Psychotherapy training courses', 'CBT certifications'],
+        practicalTips:
+          'Develop strong interviewing skills and mental status examination ability. Psychotherapy training improves patient outcomes and practice value.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship with psychiatry rotation', duration: '5.5 years', skills: ['basic psych evaluation'] }
+        ],
+        intermediate: [
+          { title: 'MD Psychiatry / DNB', duration: '3 years', skills: ['diagnosis', 'psychopharmacology','therapy basics'] }
+        ],
+        advanced: [
+          { title: 'Subspecialty training / Senior Consultant', duration: '1-3 years', skills: ['psychotherapy','programs in community mental health'] },
+          { title: 'Research & academic roles', duration: 'ongoing', skills: ['publications','policy work'] }
+        ]
+      }
+    },
+
+    'radiologist': {
+      title: 'Radiologist',
+      description: 'Medical imaging specialist: X-ray, CT, MRI, ultrasound, interventional radiology.',
+      averageSalary: '₹10,00,000 - ₹28,00,000',
+      jobGrowth: '16%',
+      content: {
+        overview:
+          'Radiologists interpret medical imaging to diagnose disease; subfields include diagnostic imaging (CT/MRI/US) and interventional radiology (minimally invasive image-guided procedures). The role requires strong pattern recognition and cross-disciplinary communication with clinicians.',
+        skills: [
+          'Image interpretation across modalities (X-ray/CT/MRI/US)',
+          'Ultrasound operation & Doppler',
+          'Interventional procedural skills (if IR)',
+          'Image-guided biopsy techniques',
+          'Report writing and multidisciplinary collaboration'
+        ],
+        careerOptions: ['Diagnostic radiologist', 'Interventional radiologist', 'Teleradiology', 'Academic radiology'],
+        topRecruiters: ['Diagnostic imaging centers', 'Tertiary hospitals', 'Teleradiology firms'],
+        higherStudies: ['MD Radiology', 'DNB Radiology', 'Fellowships in interventional radiology / neuroradiology'],
+        recommendedCertifications: ['Specialist imaging workshops, advanced CT/MRI certification'],
+        practicalTips:
+          'Exposure to wide imaging case-mix during residency is essential. Interventional radiology increases procedural demand and remuneration.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic diagnostic thinking'] },
+          { title: 'NEET-PG and apply for radiology residency', duration: '6-12 months', skills: ['exam prep','clinical rotations'] }
+        ],
+        intermediate: [
+          { title: 'MD/DNB Radiology', duration: '3 years', skills: ['cross-sectional imaging','ultrasound','reporting'] }
+        ],
+        advanced: [
+          { title: 'Fellowship (IR/neuroradiology/oncoradiology)', duration: '1-2 years', skills: ['procedural competence','subspecialty reporting'] },
+          { title: 'Senior consultant / teleradiology services', duration: 'ongoing', skills: ['quality control','teaching'] }
+        ]
+      }
+    },
+
+    'anesthesiologist': {
+      title: 'Anesthesiologist',
+      description: 'Perioperative care, anesthesia administration, pain management and critical care support.',
+      averageSalary: '₹12,00,000 - ₹30,00,000',
+      jobGrowth: '17%',
+      content: {
+        overview:
+          'Anesthesiologists manage perioperative care — pre-op assessment, intraoperative anesthesia and post-op recovery — and also run critical care and pain services. The specialty demands rapid decision-making, physiology mastery and procedural technical skill.',
+        skills: [
+          'Airway management',
+          'General & regional anesthesia techniques',
+          'Critical care & ICU management',
+          'Pain management procedures',
+          'Resuscitation & ACLS'
+        ],
+        careerOptions: ['Operating theatre anesthesiologist', 'Intensive care consultant', 'Pain clinic specialist', 'Obstetric anesthesia'],
+        topRecruiters: ['Hospitals with surgical specialties', 'ICUs', 'Ambulatory surgery centers'],
+        higherStudies: ['MD Anesthesia / DNB Anaesthesia', 'Fellowships in pain management / critical care'],
+        recommendedCertifications: ['ACLS/ATLS', 'Advanced airway courses'],
+        practicalTips:
+          'Hands-on airway skills and ICU exposure during residency are pivotal. Pain clinics and ICU roles broaden career options beyond the OT.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic resuscitation','clinical rotations'] }
+        ],
+        intermediate: [
+          { title: 'MD / DNB Anesthesia', duration: '3 years', skills: ['anesthesia techniques','ventilator management'] }
+        ],
+        advanced: [
+          { title: 'Fellowships in pain/critical care', duration: '1-2 years', skills: ['advanced ICU care','regional anesthesia'] },
+          { title: 'Consultant / senior anesthesiologist', duration: 'ongoing', skills: ['OT leadership','protocol development'] }
+        ]
+      }
+    },
+
+    'oncologist': {
+      title: 'Oncologist (Medical / Surgical / Radiation)',
+      description: 'Cancer diagnosis and multimodal treatment: chemotherapy, surgery, radiation and palliative care.',
+      averageSalary: '₹12,00,000 - ₹40,00,000+',
+      jobGrowth: '20%',
+      content: {
+        overview:
+          'Oncology is the multidisciplinary field managing cancer patients using medical (chemotherapy, targeted therapy), surgical and radiation approaches. Subspecialties include medical oncology, surgical oncology and radiation oncology. Oncology requires long-term patient relationships, research orientation and coordination of complex care plans.',
+        skills: [
+          'Cancer diagnostics & staging',
+          'Chemotherapy prescription & side-effect management',
+          'Surgical oncology techniques (if surgical route)',
+          'Radiation oncology planning (if radiation route)',
+          'Palliative care & symptom control'
+        ],
+        careerOptions: [
+          'Medical oncologist',
+          'Surgical oncologist',
+          'Radiation oncologist',
+          'Clinical trials researcher',
+          'Palliative care specialist'
+        ],
+        topRecruiters: ['Cancer institutes', 'Tertiary hospitals', 'Comprehensive cancer centers', 'Clinical research organizations'],
+        higherStudies: ['MD/DNB in related fields -> DM Medical Oncology or MCh Surgical Oncology or MD Radiation Oncology', 'PhD in oncology research'],
+        recommendedCertifications: ['Oncology fellowships', 'Palliative care training'],
+        practicalTips:
+          'Pick a focused route early — medical, surgical or radiation oncology — and aim for tertiary center training. Research exposure and publications strengthen academic careers.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'MBBS + Internship', duration: '5.5 years', skills: ['basic oncology exposure'] },
+          { title: 'MD General Medicine or MS General Surgery (route dependent)', duration: '3 years', skills: ['broad specialty care'] }
+        ],
+        intermediate: [
+          { title: 'DM Medical Oncology / MCh Surgical Oncology / MD Radiotherapy', duration: '3 years', skills: ['cancer treatment protocols','multidisciplinary care'] }
+        ],
+        advanced: [
+          { title: 'Fellowships & Research', duration: '1-3 years', skills: ['clinical trials','translational research'] },
+          { title: 'Senior consultant / head of oncology department', duration: 'ongoing', skills: ['program leadership','clinical governance'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'law': {
+  title: 'Law (LLB/LLM)',
+  icon: 'gavel',
+  color: 'bg-gradient-to-r from-yellow-600 to-orange-700',
+  description: 'Bachelor of Law - Build a career in legal practice, judiciary, or corporate law.',
+  averageSalary: '₹3,00,000 - ₹20,00,000+',
+  jobGrowth: '10% (Steady growth)',
+  hasSubcategories: true,
+  subcategories: {
+    'corporate': {
+      title: 'Corporate Lawyer',
+      description: 'Corporate governance, M&A, contracts, compliance and commercial law for businesses.',
+      averageSalary: '₹6,00,000 - ₹25,00,000',
+      jobGrowth: '12%',
+      content: {
+        overview:
+          'Corporate lawyers advise companies on legal issues including contracts, mergers & acquisitions, corporate governance, compliance, securities law and commercial disputes. They often work in law firms or in-house legal teams of companies and collaborate closely with finance and management teams.',
+        skills: [
+          'Contract drafting & negotiation',
+          'Company law & compliance',
+          'Mergers & acquisitions processes',
+          'Due diligence',
+          'Commercial litigation basics',
+          'Corporate governance and regulatory understanding'
+        ],
+        careerOptions: [
+          'In-house counsel (corporate legal team)',
+          'Associate / partner at corporate law firm',
+          'Compliance officer / legal advisor',
+          'M&A specialist'
+        ],
+        topRecruiters: ['Top law firms', 'Corporate legal departments of large corporations', 'Consulting firms', 'Banks & financial institutions'],
+        higherStudies: ['LLM (Corporate Law / International Business Law)', 'Certifications in M&A/Competition Law'],
+        recommendedCertifications: ['Corporate compliance programs', 'IP/competition law short courses'],
+        practicalTips:
+          'Intern with top law firms and corporate legal teams; strong contractual drafting and negotiation practice is key. Familiarity with corporate finance helps for M&A roles.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'LLB (5-yr integrated or 3-yr)', duration: '3-5 years', skills: ['law basics','legal writing'] },
+          { title: 'Internships at law firms / corporate legal teams', duration: '6-12 months', skills: ['contract review','research'] }
+        ],
+        intermediate: [
+          { title: 'Practice at corporate law firm or in-house', duration: '2-4 years', skills: ['M&A support','due diligence'] },
+          { title: 'LLM or specialized courses (optional)', duration: '1-2 years', skills: ['international law','tax law'] }
+        ],
+        advanced: [
+          { title: 'Senior Counsel / Partner / Head of Legal', duration: 'ongoing', skills: ['deal leadership','team management','strategy'] }
+        ]
+      }
+    },
+
+    'criminal': {
+      title: 'Criminal Lawyer',
+      description: 'Criminal defense or prosecution: court advocacy, case preparation, and legal strategy.',
+      averageSalary: '₹4,00,000 - ₹18,00,000',
+      jobGrowth: '10%',
+      content: {
+        overview:
+          'Criminal lawyers handle criminal trials, represent accused or state in prosecutions, and work on plea negotiations, bail hearings and appeals. Strong courtroom advocacy, case law knowledge and procedural expertise are essential.',
+        skills: [
+          'Courtroom advocacy & litigation skills',
+          'Criminal procedure and evidence law',
+          'Case analysis and strategy',
+          'Client interviewing and witness handling',
+          'Plea negotiation'
+        ],
+        careerOptions: ['Defense counsel', 'Public prosecutor', 'Legal aid lawyer', 'Criminal law consultant', 'Forensic legal consultant'],
+        topRecruiters: ['Private litigation firms', 'Public prosecutor offices', 'Legal-aid organisations', 'Criminal barrister chambers (where applicable)'],
+        higherStudies: ['LLM in Criminal Law', 'Diplomas in Forensic Science/Law & Forensics'],
+        recommendedCertifications: ['Trial advocacy workshops', 'forensic basics courses'],
+        practicalTips:
+          'Start courtroom exposure early through internships with litigators; observe hearings, prepare case briefs and learn procedural law deeply.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'LLB & court internships', duration: '3-5 years', skills: ['court observation','brief drafting'] }
+        ],
+        intermediate: [
+          { title: 'Junior associate in criminal practice', duration: '2-5 years', skills: ['case preparation','magistrate & sessions work'] }
+        ],
+        advanced: [
+          { title: 'Senior Advocate / Public Prosecutor / Independent Practice', duration: 'ongoing', skills: ['trial mastery','legal strategy'] }
+        ]
+      }
+    },
+
+    'civil': {
+      title: 'Civil Lawyer',
+      description: 'Civil disputes: property, contracts, family law, torts and remedies.',
+      averageSalary: '₹3,50,000 - ₹15,00,000',
+      jobGrowth: '9%',
+      content: {
+        overview:
+          'Civil lawyers handle disputes related to property, contracts, family matters, torts and debt recovery. The work involves drafting pleadings, negotiating settlements and representing clients at various civil courts and tribunals.',
+        skills: [
+          'Civil procedure & evidence',
+          'Drafting plaints, written statements, affidavits',
+          'Negotiation and settlement skills',
+          'Family law and property law expertise'
+        ],
+        careerOptions: ['Private civil litigation', 'Corporate contract dispute resolution', 'Family law practice', 'Real estate legal advisory'],
+        topRecruiters: ['Law firms', 'Real estate developers', 'Banks & NBFCs (for recovery)', 'Legal aid services'],
+        higherStudies: ['LLM in Civil Law / Property Law', 'Diploma courses in ADR / arbitration'],
+        recommendedCertifications: ['ADR/mediation training'],
+        practicalTips:
+          'Courtroom habits, the ability to structure arguments and consistent drafting practice are key. ADR skills (mediation/arbitration) add value.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'LLB & internships in civil practice', duration: '3-5 years', skills: ['case drafting','court observation'] }
+        ],
+        intermediate: [
+          { title: 'Associate at litigation firm / independent practice', duration: '2-5 years', skills: ['trial handling','negotiation'] }
+        ],
+        advanced: [
+          { title: 'Senior counsel / Arbitrator / Tribunal appointments', duration: 'ongoing', skills: ['lead counsel roles','alternative dispute resolution'] }
+        ]
+      }
+    },
+
+    'constitutional': {
+      title: 'Constitutional Lawyer / Human Rights',
+      description: 'Work on constitutional law, fundamental rights, public interest litigation and policy advising.',
+      averageSalary: '₹5,00,000 - ₹20,00,000',
+      jobGrowth: '11%',
+      content: {
+        overview:
+          'Constitutional lawyers focus on public law issues—fundamental rights, constitutional interpretation, PILs and policy-level litigation. They often work on human rights, public policy and high-impact litigation that shapes law & governance.',
+        skills: [
+          'Constitutional interpretation',
+          'Public interest litigation drafting',
+          'Research & constitutional history',
+          'Policy analysis'
+        ],
+        careerOptions: ['Public interest lawyer', 'Policy advisor', 'Human rights advocate', 'Academic in constitutional law'],
+        topRecruiters: ['NGOs', 'Human rights organisations', 'Public policy think-tanks', 'Legal research institutes'],
+        higherStudies: ['LLM in Constitutional Law / Public Law', 'PhD in Constitutional Studies'],
+        recommendedCertifications: ['human rights law courses', 'policy analysis programs'],
+        practicalTips:
+          'Build strong research & writing skills. Public interest and NGO internships help gain exposure to systemic legal issues.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'LLB & research-oriented internships', duration: '3-5 years', skills: ['legal research','policy drafting'] }
+        ],
+        intermediate: [
+          { title: 'Work with NGOs / research centres / public law firms', duration: '2-4 years', skills: ['PIL drafting','policy engagement'] }
+        ],
+        advanced: [
+          { title: 'Senior advocate / policy advisor / academic', duration: 'ongoing', skills: ['legal scholarship','policy influence'] }
+        ]
+      }
+    },
+
+    'judge': {
+      title: 'Judiciary (Judge / Judicial Services)',
+      description: 'Career path to become a judge: lower judiciary via judicial services exams and elevation to higher courts through experience and service.',
+      averageSalary: '₹10,00,000 - ₹30,00,000+',
+      jobGrowth: '14%',
+      content: {
+        overview:
+          "A judicial career involves adjudicating disputes, interpreting law and administering justice. In many countries, entry to the lower judiciary is via state judicial service exams (after LLB) and, with experience, judges may be elevated to higher courts. The work demands impeccable legal knowledge, impartiality, procedural competence and strong writing and reasoning skills.",
+        skills: [
+          'Mastery of procedural and substantive law',
+          'Judgment writing & legal reasoning',
+          'Courtroom management and case prioritization',
+          'Impartial assessment & ethical judgment'
+        ],
+        careerOptions: ['Civil judge / magistrate', 'District & sessions judge', 'High Court judge (elevation)', 'Judicial academies (teaching)'],
+        topRecruiters: ['State Judicial Services', 'District Courts', 'High Courts'],
+        higherStudies: ['LLM (optional)', 'Judicial training programs', 'Research in procedural law'],
+        recommendedCertifications: ['judicial academies training', 'legal writing workshops'],
+        practicalTips:
+          'Prepare for state judicial services or bar practice. Clerkships with sitting judges, and strong skills in judgment-writing and case law analysis, are crucial.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'LLB & strong bar practice / preparation', duration: '3-5 years', skills: ['court conventions','legal drafting'] },
+          { title: 'Attempt Judicial Services Exam or gain litigation experience', duration: '6-24 months', skills: ['subject mastery','answer-writing'] }
+        ],
+        intermediate: [
+          { title: 'Entry-level Judge / Magistrate (after exam)', duration: 'initial service years', skills: ['trial management','case law application'] }
+        ],
+        advanced: [
+          { title: 'Promotion to District/High Court roles, senior judiciary', duration: 'decades depending on system', skills: ['administration','judicial leadership'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'teaching': {
+  title: 'Teaching & Education',
+  icon: 'book-open',
+  color: 'bg-gradient-to-r from-pink-500 to-purple-600',
+  description: 'Teaching careers from school level to higher education and research.',
+  averageSalary: '₹3,00,000 - ₹15,00,000',
+  jobGrowth: '8% (Steady demand)',
+  hasSubcategories: true,
+  subcategories: {
+    'school': {
+      title: 'School Teacher',
+      description: 'Primary & secondary school teaching across subjects; lesson planning, classroom management and student assessment.',
+      averageSalary: '₹3,00,000 - ₹8,00,000',
+      jobGrowth: '7%',
+      content: {
+        overview:
+          'School teachers plan and deliver lessons, assess student learning, manage classrooms and communicate with parents. Modern teaching also increasingly uses digital learning platforms, differentiated instruction and assessment-driven planning.',
+        skills: [
+          'Subject expertise & curriculum knowledge',
+          'Lesson planning & instructional design',
+          'Classroom management & behaviour strategies',
+          'Assessment & constructive feedback',
+          'Parent-teacher communication',
+          'Basic edtech skills (LMS, digital content)'
+        ],
+        careerOptions: ['Primary/secondary teacher', 'Headteacher/Principal', 'Curriculum developer', 'Educational counsellor', 'Edtech content creator'],
+        topRecruiters: ['Private schools', 'CBSE/ICSE schools', 'Government schools', 'International schools', 'EdTech platforms'],
+        higherStudies: ['BEd (mandatory in many systems for school teaching)', 'MEd', 'Diplomas in special education'],
+        recommendedCertifications: ['CTET/State TET (for government teaching eligibility)'],
+        practicalTips:
+          'Gain classroom experience through student teaching placements and build a portfolio of lesson plans & student outcomes. Familiarity with online teaching platforms is increasingly valuable.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Bachelor degree in subject + B.Ed / B.El.Ed', duration: '3-4 years + 1-2 years', skills: ['instructional techniques','classroom practicum'] }
+        ],
+        intermediate: [
+          { title: 'Early-career teaching, CPD & subject specialization', duration: '2-5 years', skills: ['assessment design','differentiation'] }
+        ],
+        advanced: [
+          { title: 'Senior leadership or specialist roles', duration: 'ongoing', skills: ['school leadership','curriculum design'] }
+        ]
+      }
+    },
+
+    'college': {
+      title: 'College Lecturer',
+      description: 'Undergraduate teaching, lab supervision, student mentoring and possible research activities.',
+      averageSalary: '₹4,00,000 - ₹12,00,000',
+      jobGrowth: '8%',
+      content: {
+        overview:
+          'College lecturers teach at the undergraduate level, manage labs/tutorials, supervise projects and may have research responsibilities depending on the institution. For public colleges, eligibility often requires a masters and a NET/SET qualification in India.',
+        skills: [
+          'Subject-matter expertise at masters level',
+          'Teaching & assessment at higher education level',
+          'Lab supervision and project mentoring',
+          'Academic writing & basic research methods'
+        ],
+        careerOptions: ['Lecturer / Assistant Professor', 'College-level academic coordinator', 'Research assistant', 'Higher education administrator'],
+        topRecruiters: ['Universities', 'Colleges (public and private)', 'Research institutes'],
+        higherStudies: ['PhD (required for higher academic ranks)', 'NET/SET for lecturer eligibility where applicable'],
+        recommendedCertifications: ['Pedagogy for higher education', 'research methodology courses'],
+        practicalTips:
+          'Publish and present research where possible; secure teaching assistantships and develop course materials to strengthen academic CV.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Master’s degree in chosen subject', duration: '2 years', skills: ['advanced subject knowledge'] },
+          { title: 'Qualify NET/SET (where applicable)', duration: '6-12 months', skills: ['exam-oriented study'] }
+        ],
+        intermediate: [
+          { title: 'Lectureship and early research', duration: '3-5 years', skills: ['course delivery','paper publication'] }
+        ],
+        advanced: [
+          { title: 'PhD, Associate Professor & Professor track', duration: 'varies', skills: ['research leadership','grant writing'] }
+        ]
+      }
+    },
+
+    'professor': {
+      title: 'University Professor',
+      description: 'Postgraduate teaching, research leadership, PhD supervision and academic administration.',
+      averageSalary: '₹7,00,000 - ₹20,00,000+',
+      jobGrowth: '10%',
+      content: {
+        overview:
+          'University professors lead teaching programmes, supervise research students (MPhil/PhD), secure research funding and contribute to academic governance. The role requires sustained research output, effective pedagogy and mentorship abilities.',
+        skills: [
+          'Advanced research & publication track record',
+          'PhD supervision experience',
+          'Grant writing & project management',
+          'Advanced pedagogy and curriculum design'
+        ],
+        careerOptions: ['Professor', 'Department head', 'Research director', 'Academic administrator'],
+        topRecruiters: ['Universities', 'Research Institutes', 'Government academic bodies'],
+        higherStudies: ['PhD (essential)', 'Post-doctoral research', 'International fellowships'],
+        recommendedCertifications: ['Research methodology, pedagogy courses'],
+        practicalTips:
+          'Publications in peer-reviewed journals and external funding success are key to academic promotions.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'PhD & early publications', duration: '3-5 years (PhD) + ongoing', skills: ['research design','writing'] }
+        ],
+        intermediate: [
+          { title: 'Assistant / Associate Professor track', duration: '5-10 years', skills: ['teaching & research balance'] }
+        ],
+        advanced: [
+          { title: 'Full Professor & leadership roles', duration: 'ongoing', skills: ['research leadership','policy contributions'] }
+        ]
+      }
+    },
+
+    'coaching': {
+      title: 'Coaching & Private Tutor',
+      description: 'Competitive exam coaching, private tuition, and online/offline coaching enterprises.',
+      averageSalary: '₹5,00,000 - ₹15,00,000+',
+      jobGrowth: '12%',
+      content: {
+        overview:
+          'Coaching professionals run or teach in institutes preparing students for competitive exams (engineering, medical, civil services) or provide private tuition. Effective coaching blends deep subject understanding with exam strategy and performance tracking.',
+        skills: [
+          'Exam strategy & syllabus mastery',
+          'Communication & motivational skills',
+          'Content creation & assessment design',
+          'Online teaching platform usage'
+        ],
+        careerOptions: ['Private tutor', 'Coaching institute faculty', 'Edtech content creator', 'Founder of coaching center'],
+        topRecruiters: ['Coaching institutes', 'Edtech companies', 'Private tuition networks'],
+        higherStudies: ['Advanced subject degrees may help credibility (MSc, MTech, etc.)'],
+        recommendedCertifications: ['Instructional design', 'online pedagogy'],
+        practicalTips:
+          'Build a portfolio of student results and testimonials; leverage short-format online content for reach.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Subject mastery + demonstration lessons', duration: '6-12 months', skills: ['sample lectures','content creation'] }
+        ],
+        intermediate: [
+          { title: 'Join coaching institute or start small private groups', duration: '1-3 years', skills: ['student assessment','scaling classes'] }
+        ],
+        advanced: [
+          { title: 'Scale to edtech/own brand', duration: 'ongoing', skills: ['business development','content ops'] }
+        ]
+      }
+    },
+
+    'edtech': {
+      title: 'EdTech Specialist',
+      description: 'Design of digital learning products, instructional design, course creation and platform management.',
+      averageSalary: '₹6,00,000 - ₹18,00,000',
+      jobGrowth: '14%',
+      content: {
+        overview:
+          'EdTech professionals design learning experiences, author content and manage educational platforms. Roles merge pedagogy with product thinking and often require collaboration with engineers, designers and educators.',
+        skills: [
+          'Instructional design',
+          'Learning analytics',
+          'Content authoring (video/text/assessments)',
+          'UI/UX for learning',
+          'Project & stakeholder management'
+        ],
+        careerOptions: ['Instructional designer', 'Product manager (education)', 'Content strategist', 'Learning engineer'],
+        topRecruiters: ['Edtech startups', 'Educational publishers', 'Large learning platforms'],
+        higherStudies: ['M.Ed with technology focus', 'MS in Learning Sciences', 'Courses in product management'],
+        recommendedCertifications: ['Instructional design certificates', 'LMS expertise courses'],
+        practicalTips:
+          'Build a portfolio of micro-courses, videos, and learning modules; familiarity with LMS and analytics tools is highly valued.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Foundations in pedagogy & digital tools', duration: '6-12 months', skills: ['content creation','LMS basics'] }
+        ],
+        intermediate: [
+          { title: 'Work on product-led learning projects', duration: '1-3 years', skills: ['instructional design','user testing'] }
+        ],
+        advanced: [
+          { title: 'Lead learning product teams / build edtech products', duration: 'ongoing', skills: ['strategy','scale'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'bsc': {
+  title: 'Bachelor of Science (B.Sc)',
+  icon: 'flask',
+  color: 'bg-gradient-to-r from-cyan-600 to-teal-700',
+  description: 'Undergraduate degree in science fields with diverse career options.',
+  averageSalary: '₹2,50,000 - ₹12,00,000',
+  jobGrowth: 'Varies by specialization',
+  hasSubcategories: true,
+  subcategories: {
+    'bsc-cs': {
+      title: 'B.Sc Computer Science',
+      description: 'Programming, software, data science at undergraduate level.',
+      averageSalary: '₹3,00,000 - ₹15,00,000',
+      jobGrowth: '14%',
+      content: {
+        overview:
+          'B.Sc CS provides fundamentals of programming, data structures, databases and basic algorithms. It is a strong starting point for software development, testing and entry-level data roles. Students often supplement the degree with internships, bootcamps and certifications.',
+        skills: [
+          'Programming (Python, Java, C++)',
+          'Data Structures & Algorithms',
+          'Database management (SQL)',
+          'Basic web development',
+          'Intro to statistics/data analytics'
+        ],
+        careerOptions: ['Software developer', 'QA/test engineer', 'Junior data analyst', 'Web developer'],
+        topRecruiters: ['IT services companies', 'Startups', 'Product companies', 'Analytics firms'],
+        higherStudies: ['MSc Computer Science', 'M.Tech (if eligible)', 'Certification bootcamps in data & web dev'],
+        recommendedCertifications: ['Data Science, Web Dev, Cloud basics'],
+        practicalTips:
+          'Do projects (GitHub), internships and competitive programming practice to stand out when applying for jobs.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Core CS subjects & programming projects', duration: 'Year 1-2', skills: ['programming fundamentals','small projects'] }
+        ],
+        intermediate: [
+          { title: 'Database & web dev, internships', duration: 'Year 2-3', skills: ['SQL','full-stack basics','internship experience'] }
+        ],
+        advanced: [
+          { title: 'Specialization in data/ML/web & capstone', duration: 'Final year', skills: ['project portfolio','open-source contributions'] }
+        ]
+      }
+    },
+
+    'bsc-physics': {
+      title: 'B.Sc Physics',
+      description: 'Foundations of classical and modern physics with lab work and maths.',
+      averageSalary: '₹2,80,000 - ₹12,00,000',
+      jobGrowth: '8%',
+      content: {
+        overview:
+          'BSc Physics covers mechanics, electromagnetism, optics and modern physics. Graduates can enter research, instrumentation, data analytics or further study (MSc, integrated PhD). Practical lab skills and mathematical rigor are key.',
+        skills: ['Classical mechanics', 'Electromagnetism', 'Mathematical methods', 'Experimental lab skills', 'Data analysis'],
+        careerOptions: ['Research assistant', 'Instrumentation engineer', 'Teaching', 'Data analytics (with upskilling)'],
+        topRecruiters: ['Research labs', 'R&D divisions', 'Instrumentation companies', 'Higher education'],
+        higherStudies: ['MSc Physics', 'Integrated PhD', 'MTech in related fields'],
+        recommendedCertifications: ['Computational physics / instrumentation courses'],
+        practicalTips:
+          'Participate in lab projects, internships at research facilities and strengthen mathematical/statistical skills.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Core physics + lab work', duration: 'Year 1-2', skills: ['experiments','theory basics'] }
+        ],
+        intermediate: [
+          { title: 'Advanced topics & project', duration: 'Year 2-3', skills: ['optics','quantum basics'] }
+        ],
+        advanced: [
+          { title: 'Research internship or MSc entrance', duration: 'Final year', skills: ['project report','research skills'] }
+        ]
+      }
+    },
+
+    'bsc-chemistry': {
+      title: 'B.Sc Chemistry',
+      description: 'Chemistry fundamentals with lab techniques—path to pharma, research, and quality control careers.',
+      averageSalary: '₹2,70,000 - ₹10,00,000',
+      jobGrowth: '7%',
+      content: {
+        overview:
+          'BSc Chemistry covers organic, inorganic and physical chemistry with laboratory work. Career pathways include pharma, quality control, R&D, and further degrees (MSc/PhD). Practical lab skills and safety training are crucial.',
+        skills: ['Organic synthesis', 'Analytical techniques (HPLC, GC)', 'Lab safety', 'Spectroscopy', 'Quality control procedures'],
+        careerOptions: ['Lab technician', 'Quality analyst', 'Pharmaceutical R&D', 'Chemical industry roles'],
+        topRecruiters: ['Pharma companies', 'Chemical manufacturers', 'Analytical labs'],
+        higherStudies: ['MSc Chemistry', 'MTech in Chemical Sciences', 'PhD'],
+        recommendedCertifications: ['Analytical instrumentation courses'],
+        practicalTips:
+          'Gain lab experience and instrument handling skills. Intern with local labs or industry to gain employable skills.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Core chemistry courses & labs', duration: 'Year 1-2', skills: ['experiments','safety'] }
+        ],
+        intermediate: [
+          { title: 'Analytical techniques & industry internships', duration: 'Year 2-3', skills: ['spectroscopy','instrument handling'] }
+        ],
+        advanced: [
+          { title: 'MSc or industry roles', duration: 'Final year onwards', skills: ['research proposals','industry exposure'] }
+        ]
+      }
+    },
+
+    'bsc-bio': {
+      title: 'B.Sc Biology',
+      description: 'Biology, genetics, ecology, lab techniques — foundation for biotech or life sciences careers.',
+      averageSalary: '₹2,60,000 - ₹9,00,000',
+      jobGrowth: '9%',
+      content: {
+        overview:
+          'BSc Biology provides grounding in cell biology, genetics and ecology. Career paths run to biotech, lab research, clinical research, conservation and higher study options like MSc, MTech or integrated PhD.',
+        skills: [
+          'Molecular biology techniques',
+          'Microbiology & culturing',
+          'Genetics and bioinformatics basics',
+          'Lab documentation & safety'
+        ],
+        careerOptions: ['Lab technician', 'Clinical research associate', 'Biotech industry roles', 'Further study (MSc/PhD)'],
+        topRecruiters: ['Biotech firms', 'Clinical research organisations', 'Academic labs'],
+        higherStudies: ['MSc Biotechnology', 'PhD in Life Sciences', 'MTech (Bioinformatics)'],
+        recommendedCertifications: ['Bioinformatics / wet-lab technique courses'],
+        practicalTips:
+          'Hands-on lab internships and familiarity with basic instrumentation and data analysis frameworks are helpful.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Core biology and lab work', duration: 'Year 1-2', skills: ['cell biology','lab protocols'] }
+        ],
+        intermediate: [
+          { title: 'Specialized modules & internships', duration: 'Year 2-3', skills: ['microbiology','biotech tools'] }
+        ],
+        advanced: [
+          { title: 'Project / MSc entry', duration: 'Final year', skills: ['research methods','paper writing'] }
+        ]
+      }
+    },
+
+    'bsc-maths': {
+      title: 'B.Sc Mathematics',
+      description: 'Pure and applied mathematics — a pathway into analytics, teaching, research and finance.',
+      averageSalary: '₹3,00,000 - ₹12,00,000',
+      jobGrowth: '10%',
+      content: {
+        overview:
+          'BSc Mathematics trains in calculus, algebra, statistics and discrete math. Graduates can move into data analytics, actuarial science, teaching, or advanced maths degrees. Strong problem-solving and computational skills are tradeable across industries.',
+        skills: ['Calculus', 'Linear algebra', 'Probability & statistics', 'Discrete mathematics', 'Mathematical modelling', 'Programming basics (Python/Matlab)'],
+        careerOptions: ['Data analyst', 'Actuarial roles (with certification)', 'Quantitative analyst', 'Teaching & research'],
+        topRecruiters: ['Analytics firms', 'Financial institutions', 'EdTech', 'Higher education'],
+        higherStudies: ['MSc Mathematics', 'Actuarial certifications', 'MS in Data Science'],
+        recommendedCertifications: ['Data science bootcamps', 'actuarial exam prep'],
+        practicalTips:
+          'Combine math study with programming and statistics courses to expand industry fit (data science, quant roles).'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Core mathematical foundation', duration: 'Year 1-2', skills: ['calculus','linear algebra'] }
+        ],
+        intermediate: [
+          { title: 'Probability, statistics & applied topics', duration: 'Year 2-3', skills: ['statistical inference','modelling'] }
+        ],
+        advanced: [
+          { title: 'Capstone / internships & postgraduate planning', duration: 'Final year', skills: ['project work','exam prep'] }
+        ]
+      }
+    },
+
+    'bsc-nursing': {
+      title: 'B.Sc Nursing',
+      description: 'Nursing education for professional patient care in hospitals, community and public health.',
+      averageSalary: '₹3,20,000 - ₹8,00,000',
+      jobGrowth: '12%',
+      content: {
+        overview:
+          'BSc Nursing trains nurses in clinical care, community health, midwifery and patient management. Registered nurses work in hospitals, clinics and community health services, with options for specialization (ICU nursing, pediatric nursing). Licensing/registration is required.',
+        skills: ['Clinical nursing care', 'Patient assessment', 'Medication administration', 'Infection control', 'Community health nursing'],
+        careerOptions: ['Staff nurse', 'ICU nurse', 'Nurse educator', 'Community health nurse'],
+        topRecruiters: ['Hospitals', 'Primary health centres', 'NGOs', 'International healthcare employers'],
+        higherStudies: ['MSc Nursing', 'Postgraduate diplomas (critical care, neonatal nursing)'],
+        recommendedCertifications: ['BLS/ACLS', ' specialty nursing certifications'],
+        practicalTips:
+          'Clinical rotations, strong bedside skills and calmness under pressure are essential. Consider higher studies for leadership roles.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'BSc Nursing coursework & clinical rotations', duration: '3-4 years', skills: ['practical nursing','patient care'] }
+        ],
+        intermediate: [
+          { title: 'Entry-level nursing roles and specialization', duration: '1-3 years', skills: ['ICU skills','neonatal care (if chosen)'] }
+        ],
+        advanced: [
+          { title: 'MSc Nursing / educator / international opportunities', duration: 'ongoing', skills: ['leadership','teaching'] }
+        ]
+      }
+    },
+
+    'bsc-agri': {
+      title: 'B.Sc Agriculture',
+      description: 'Crop science, soil science, agri-tech, farm management and agribusiness.',
+      averageSalary: '₹3,00,000 - ₹10,00,000',
+      jobGrowth: '9%',
+      content: {
+        overview:
+          'BSc Agriculture combines agronomy, soil science, horticulture and farm technology. Graduates work in agribusinesses, extension services, research and agri-tech. Practical field skills and exposure to modern agri-tech enhance employability.',
+        skills: ['Crop production', 'Soil & water management', 'Farm machinery basics', 'Agribusiness fundamentals', 'GIS & remote sensing basics'],
+        careerOptions: ['Agricultural officer', 'Farm manager', 'Agri consultant', 'R&D roles in seed & fertiliser companies'],
+        topRecruiters: ['ICAR institutes', 'Agri input companies', 'Agri-tech startups', 'Government agriculture departments'],
+        higherStudies: ['MSc Agriculture', 'MS in Agri-tech', 'MBA in Agribusiness'],
+        recommendedCertifications: ['Precision agriculture / drone applications course'],
+        practicalTips:
+          'Get hands-on farm internships and learn modern agri-tech tools (drip irrigation, sensors, drones) for competitive advantage.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Field & lab practicals + agronomy basics', duration: 'Year 1-2', skills: ['crop cycles','soil tests'] }
+        ],
+        intermediate: [
+          { title: 'Farm tech & internships', duration: 'Year 2-3', skills: ['machinery','processing'] }
+        ],
+        advanced: [
+          { title: 'Agri-business & research options', duration: 'Final year onwards', skills: ['project design','market linkage'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'chartered-accountant': {
+  title: 'Chartered Accountant (CA)',
+  icon: 'calculator',
+  color: 'bg-gradient-to-r from-green-600 to-emerald-700',
+  description: 'Professional CA certification in finance, taxation, and auditing.',
+  averageSalary: '₹6,00,000 - ₹30,00,000+',
+  jobGrowth: '12% (High demand in finance)',
+  hasSubcategories: true,
+  subcategories: {
+    'auditor': {
+      title: 'Auditor',
+      description: 'Statutory and internal auditing, assurance services and compliance.',
+      averageSalary: '₹6,00,000 - ₹18,00,000',
+      jobGrowth: '10%',
+      content: {
+        overview:
+          'Auditors evaluate financial statements and internal controls to provide assurance on the fairness of reporting. Chartered Accountants in audit roles work with accounting firms (Big 4 or smaller) performing statutory audits, internal audits and advisory assurance services.',
+        skills: [
+          'Financial statement analysis',
+          'Audit procedures & sampling',
+          'Internal control assessment',
+          'IFRS/Indian Accounting Standards understanding',
+          'Report writing & client communication'
+        ],
+        careerOptions: ['Statutory auditor', 'Internal audit specialist', 'Forensic auditor', 'Audit manager / partner'],
+        topRecruiters: ['Big 4 accounting firms', 'mid-tier CA firms', 'Large corporates for internal audit teams'],
+        higherStudies: ['Certifications in IFRS/Forensic accounting', 'MBA Finance'],
+        recommendedCertifications: ['IFRS certificate', 'forensic accounting short courses'],
+        practicalTips:
+          'During articleship (mandatory training for CA), log diverse audit experiences across industries. Develop Excel and analytics skills to stand out.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'CA Foundation / Direct entry (if eligible)', duration: '6-12 months', skills: ['accounting basics','business laws'] },
+          { title: 'Register for CA Intermediate & begin articleship', duration: '3 years (articleship)', skills: ['audit assistance','accounting software'] }
+        ],
+        intermediate: [
+          { title: 'Complete CA Final exams & articleship', duration: '6-12 months', skills: ['advanced accounting','audit leadership'] }
+        ],
+        advanced: [
+          { title: 'Audit manager / partner / specialist roles', duration: 'ongoing', skills: ['client development','firm leadership'] }
+        ]
+      }
+    },
+
+    'tax': {
+      title: 'Tax Consultant',
+      description: 'Advising on direct & indirect taxes, GST, transfer pricing and corporate tax strategy.',
+      averageSalary: '₹5,00,000 - ₹15,00,000',
+      jobGrowth: '11%',
+      content: {
+        overview:
+          'Tax consultants provide tax planning, compliance and dispute resolution services. CA qualification combined with updated knowledge of tax laws makes this a high-demand domain for advisory roles and corporate tax teams.',
+        skills: [
+          'Direct & indirect tax law (GST)',
+          'Tax planning & compliance',
+          'Transfer pricing basics',
+          'Tax research & controversy management',
+          'Client advisory & documentation'
+        ],
+        careerOptions: ['Tax consultant', 'In-house tax head', 'Transfer pricing analyst', 'Indirect tax specialist'],
+        topRecruiters: ['Tax advisory firms', 'corporate tax departments', 'consultancies'],
+        higherStudies: ['Advanced tax courses', 'LLM in taxation (optional)'],
+        recommendedCertifications: ['TP/Advance rulings workshops', 'GST certification'],
+        practicalTips:
+          'Maintain up-to-date technical knowledge; tax law changes frequently so continuous learning is essential.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'CA pathway with taxation focus', duration: 'through CA Intermediate/Final', skills: ['tax computations','GST filings'] },
+          { title: 'Articleship in tax department', duration: '2-3 years', skills: ['compliance','tax filing'] }
+        ],
+        intermediate: [
+          { title: 'Work in tax advisory or corporate tax', duration: '2-5 years', skills: ['tax planning','client handling'] }
+        ],
+        advanced: [
+          { title: 'Senior tax advisor / head of tax', duration: 'ongoing', skills: ['strategic tax planning','stakeholder management'] }
+        ]
+      }
+    },
+
+    'finance': {
+      title: 'Financial Analyst',
+      description: 'Financial planning, budgeting, modelling, valuation and corporate finance roles.',
+      averageSalary: '₹7,00,000 - ₹20,00,000',
+      jobGrowth: '13%',
+      content: {
+        overview:
+          'Financial analysts evaluate financial data to support business decisions—budgeting, forecasting, valuations and investment analysis. CAs in finance roles combine technical accounting knowledge with strategic business analysis.',
+        skills: [
+          'Financial modelling & valuation',
+          'Budgeting and forecasting',
+          'Excel and BI tools',
+          'Understanding of accounting standards',
+          'Investment analysis & risk assessment'
+        ],
+        careerOptions: ['Corporate finance analyst', 'FP&A', 'Valuation analyst', 'Investor relations'],
+        topRecruiters: ['Banks & NBFCs', 'Corporate FP&A teams', 'Consulting firms', 'Private equity/VC (with experience)'],
+        higherStudies: ['CFA (if focusing on investments)', 'MBA (finance)'],
+        recommendedCertifications: ['CFA / financial modelling courses'],
+        practicalTips:
+          'Strong Excel, modelling and presentation skills are critical. Work on case studies and financial models during articleship or internships.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'CA + exposure to finance roles during articleship', duration: '3 years', skills: ['reporting','financial analysis'] }
+        ],
+        intermediate: [
+          { title: 'FP&A / corporate finance roles', duration: '2-4 years', skills: ['forecasting','budget management'] }
+        ],
+        advanced: [
+          { title: 'Senior finance leadership (CFO route) or consulting', duration: 'ongoing', skills: ['strategy','stakeholder engagement'] }
+        ]
+      }
+    },
+
+    'investment': {
+      title: 'Investment Banker / Corporate Finance (CA route)',
+      description: 'Mergers & acquisitions, capital markets, IPOs and corporate advisory.',
+      averageSalary: '₹10,00,000 - ₹40,00,000+',
+      jobGrowth: '15%',
+      content: {
+        overview:
+          'Investment bankers advise on raising capital, M&A deals and corporate restructurings. CAs provide accounting rigor and understanding of financials that are highly valued in investment banking, private equity and corporate finance advisory.',
+        skills: [
+          'Valuation techniques (DCF, comparables)',
+          'Financial modelling & pitchbook creation',
+          'Due diligence',
+          'Deal structuring & negotiation',
+          'Capital markets exposure'
+        ],
+        careerOptions: ['Investment banking analyst', 'M&A advisor', 'Private equity associate', 'Corporate development'],
+        topRecruiters: ['Investment banks', 'boutique M&A advisory firms', 'private equity firms'],
+        higherStudies: ['MBA (top B-schools)', 'CFA (optional)'],
+        recommendedCertifications: ['Financial modelling & valuation programs'],
+        practicalTips:
+          'Entry often requires internships or pre-MBA experience; network actively and build relevant modelling skills.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'CA + internships in finance or deals', duration: 'through CA training', skills: ['valuation basics','financial statements'] }
+        ],
+        intermediate: [
+          { title: 'Analyst roles in IB / corporate finance', duration: '2-4 years', skills: ['model building','due diligence'] }
+        ],
+        advanced: [
+          { title: 'Associate / VP in PE/IB or MBA transition', duration: 'ongoing', skills: ['deal leadership','client relations'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'civil-services': {
+  title: 'Civil Services (IAS/IPS/IFS)',
+  icon: 'building',
+  color: 'bg-gradient-to-r from-purple-600 to-indigo-800',
+  description: 'Prestigious government services through UPSC/State PSC exams.',
+  averageSalary: '₹8,00,000 - ₹25,00,000+ (with perks)',
+  jobGrowth: 'Highly competitive (Limited positions)',
+  hasSubcategories: true,
+  subcategories: {
+    'ias': {
+      title: 'Indian Administrative Service (IAS)',
+      description: 'Policy making, administration, district management and governance roles.',
+      averageSalary: '₹10,00,000 - ₹30,00,000+',
+      jobGrowth: 'Competitive',
+      content: {
+        overview:
+          'IAS officers hold administrative posts across the government at district, state and central levels, formulating and implementing policy, managing public services and disaster responses. The role demands leadership, policy knowledge, administrative skills and political neutrality.',
+        skills: [
+          'Public policy understanding',
+          'Administrative and leadership skills',
+          'People & stakeholder management',
+          'Report writing & communication',
+          'Crisis and project management'
+        ],
+        careerOptions: ['District collector / DM', 'Secretary in state/central government', 'Policy advisor', 'IPS/IFS lateral collaboration roles'],
+        topRecruiters: ['Union and State Government departments', 'International development agencies (post-retirement / deputation)'],
+        higherStudies: ['Public policy (MPP), Masters in Public Administration', 'Specialised courses in governance'],
+        recommendedCertifications: ['Public policy & governance short courses'],
+        practicalTips:
+          'Clear understanding of current affairs, writing practice for mains and consistent revision for prelims are essential. Gain exposure through internships with government or policy bodies.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Graduation + Preliminary exam preparation', duration: '6-12 months', skills: ['GS fundamentals','CSAT practice'] }
+        ],
+        intermediate: [
+          { title: 'Mains exam & answer-writing practice', duration: '6-12 months', skills: ['essay writing','optional subject depth'] }
+        ],
+        advanced: [
+          { title: 'Personality test (Interview) & final selection', duration: '3-6 months', skills: ['communication','ethics & case discussion'] },
+          { title: 'Training at national academy & district posting', duration: '2+ years initial', skills: ['administration','field governance'] }
+        ]
+      }
+    },
+
+    'ips': {
+      title: 'Indian Police Service (IPS)',
+      description: 'Law enforcement, public order, policing leadership and counter-terrorism roles.',
+      averageSalary: '₹8,00,000 - ₹25,00,000',
+      jobGrowth: 'Competitive',
+      content: {
+        overview:
+          'IPS officers lead police administration, public order, crime prevention, investigations and intelligence. The job requires physical fitness, decision-making under pressure and strong ethical grounding. Specialized cadres and training in intelligence and counter-terrorism are common.',
+        skills: [
+          'Law enforcement strategy',
+          'Crisis & crowd management',
+          'Investigation & forensic basics',
+          'Leadership & team management',
+          'Public liaison & community policing'
+        ],
+        careerOptions: ['Field police leadership', 'Special units (crime branch, anti-terror units)', 'Training academies', 'Policy & advisory roles'],
+        topRecruiters: ['State police services', 'Central paramilitary / intelligence agencies (via deputation)'],
+        higherStudies: ['Courses in forensic science, criminology, public policy'],
+        recommendedCertifications: ['Investigation courses, forensic training'],
+        practicalTips:
+          'Physical and psychological fitness tests, along with strong ethical orientation and knowledge of policing law, are important; practical exposure via internships with police units helps.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Prelims & Mains preparation (UPSC route)', duration: '12-18 months typical', skills: ['law basics','ethics','current affairs'] }
+        ],
+        intermediate: [
+          { title: 'Interview & training at Sardar Vallabhbhai Patel National Police Academy (SVPNPA)', duration: 'training period', skills: ['police training','leadership'] }
+        ],
+        advanced: [
+          { title: 'Field postings & specialized unit leadership', duration: 'career-long', skills: ['tactical planning','intelligence handling'] }
+        ]
+      }
+    },
+
+    'ifs': {
+      title: 'Indian Foreign Service (IFS)',
+      description: 'Diplomacy, international relations and consular services representing the country abroad.',
+      averageSalary: '₹12,00,000 - ₹35,00,000+',
+      jobGrowth: 'Competitive',
+      content: {
+        overview:
+          'IFS officers handle diplomacy, represent the country at embassies/high commissions, handle bilateral/multilateral negotiations and protect national interests overseas. The role requires foreign language aptitude, cultural sensitivity and negotiation skills.',
+        skills: [
+          'Diplomacy & negotiation',
+          'Language skills (foreign languages)',
+          'Cross-cultural communication',
+          'Policy analysis in international relations',
+          'Crisis management (evacuations, consular issues)'
+        ],
+        careerOptions: ['Diplomat / Ambassador', 'Trade & commerce negotiation roles', 'International organizations liaison', 'Cultural & public diplomacy'],
+        topRecruiters: ['Ministry of External Affairs', 'International development agencies (postings/deputation)'],
+        higherStudies: ['Masters in International Relations / Diplomacy', 'language & area studies'],
+        recommendedCertifications: ['Language proficiency courses', 'international law courses'],
+        practicalTips:
+          'Demonstrate strong communication skills, global awareness and ability to adapt to varied cultural contexts; internships in international affairs help.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'UPSC prelims & mains with international relations optional / focused GS', duration: '12-18 months', skills: ['IR knowledge','essay writing'] }
+        ],
+        intermediate: [
+          { title: 'Interview & training then initial diplomatic postings', duration: 'training + initial 2-5 years', skills: ['consular services','trade diplomacy'] }
+        ],
+        advanced: [
+          { title: 'Senior diplomatic roles / ambassadorial posts', duration: 'career-long', skills: ['strategic diplomacy','leadership'] }
+        ]
+      }
+    },
+
+    'irs': {
+      title: 'Indian Revenue Service (IRS)',
+      description: 'Tax administration, customs & indirect taxes, revenue collection and enforcement.',
+      averageSalary: '₹9,00,000 - ₹28,00,000',
+      jobGrowth: 'Competitive',
+      content: {
+        overview:
+          'IRS officers manage direct tax administration, customs or GST-related functions, enforcement and revenue policy implementation. The role involves technical tax knowledge, investigation skills and administrative leadership.',
+        skills: ['Tax law knowledge', 'Audit & investigation methods', 'Policy implementation', 'Data analysis for compliance'],
+        careerOptions: ['Tax commissioner roles', 'Customs & GST administration', 'Policy advisory and enforcement wings'],
+        topRecruiters: ['Income Tax Department', 'Customs & Central Excise', 'GST authorities'],
+        higherStudies: ['Taxation & law studies, public finance courses'],
+        recommendedCertifications: ['Taxation courses & advanced audits'],
+        practicalTips:
+          'Solid grounding in economics, taxation and law is helpful; exposure to statutory frameworks and compliance processes is beneficial.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'UPSC preparation with focus on GS & optional subjects relevant to public administration/economics', duration: '12-18 months', skills: ['economics basics','tax knowledge'] }
+        ],
+        intermediate: [
+          { title: 'Interview & cadre allocation then department training', duration: 'training phase', skills: ['tax administration','enforcement'] }
+        ],
+        advanced: [
+          { title: 'Leadership roles in revenue administration', duration: 'ongoing', skills: ['policy implementation','administrative leadership'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'management': {
+  title: 'Management (BBA/MBA)',
+  icon: 'briefcase',
+  color: 'bg-gradient-to-r from-blue-500 to-indigo-700',
+  description: 'Business, leadership, and corporate management roles.',
+  averageSalary: '₹5,00,000 - ₹35,00,000+',
+  jobGrowth: '12%',
+  hasSubcategories: true,
+  subcategories: {
+    'hr': {
+      title: 'Human Resource Manager',
+      description: 'Recruitment, employee relations, HR policies, learning & development and performance management.',
+      averageSalary: '₹6,00,000 - ₹20,00,000',
+      jobGrowth: '11%',
+      content: {
+        overview:
+          'HR managers design people strategies, recruit talent, handle employee relations, compensation & benefits, and oversee training & development. Modern HR also uses analytics for workforce planning and employee engagement.',
+        skills: [
+          'Talent acquisition & interviewing',
+          'Performance management & appraisal systems',
+          'Learning & development program design',
+          'Employee relations & labour law',
+          'HR analytics'
+        ],
+        careerOptions: ['HR generalist', 'Talent acquisition lead', 'L&D manager', 'Compensation & benefits specialist'],
+        topRecruiters: ['Large corporates', 'HR consultancies', 'startups', 'BPOs shared services'],
+        higherStudies: ['MBA (HR)', 'Masters in Human Resource Management', 'SHRM / CIPD certifications'],
+        recommendedCertifications: ['SHRM-CP/SCP', 'people analytics courses'],
+        practicalTips:
+          'Internships in recruitment and HRBP roles help; build people skills, empathy and data literacy.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'BBA / degree + HR internships', duration: '3-4 years education + internships', skills: ['recruitment basics','HR operations'] }
+        ],
+        intermediate: [
+          { title: 'HR roles & specialization (L&D/comp)', duration: '2-5 years', skills: ['policy design','training modules'] }
+        ],
+        advanced: [
+          { title: 'Head of HR / CHRO track', duration: 'long-term', skills: ['people strategy','org design'] }
+        ]
+      }
+    },
+
+    'marketing': {
+      title: 'Marketing Manager',
+      description: 'Brand strategy, demand generation, digital marketing, product marketing and market research.',
+      averageSalary: '₹7,00,000 - ₹25,00,000',
+      jobGrowth: '13%',
+      content: {
+        overview:
+          'Marketing managers craft brand strategy, run campaigns across channels, analyse customer insights and drive revenue growth. Digital marketing, content strategy and analytics are core modern capabilities.',
+        skills: [
+          'Branding & positioning',
+          'Digital marketing (SEO, SEM, social media)',
+          'Marketing analytics & attribution',
+          'Content strategy & storytelling',
+          'Product marketing & go-to-market planning'
+        ],
+        careerOptions: ['Digital marketer', 'Product marketer', 'Brand manager', 'Growth marketer', 'Market researcher'],
+        topRecruiters: ['Consumer brands', 'Startups', 'Agencies', 'Product companies'],
+        higherStudies: ['MBA (Marketing)', 'Masters in Marketing / Communications'],
+        recommendedCertifications: ['Google Analytics, Ads certification', 'content & SEO courses'],
+        practicalTips:
+          'Build a portfolio of campaigns (even personal), understand analytics, and learn to report ROI effectively.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Marketing basics & internships', duration: '6-12 months', skills: ['social media management','content creation'] }
+        ],
+        intermediate: [
+          { title: 'Specialize in digital/product/brand', duration: '1-3 years', skills: ['campaign strategy','analytics'] }
+        ],
+        advanced: [
+          { title: 'Head of Marketing / CMO path', duration: 'ongoing', skills: ['budgeting','cross-functional leadership'] }
+        ]
+      }
+    },
+
+    'finance': {
+      title: 'Finance Manager',
+      description: 'Financial planning, reporting, treasury, budgeting and corporate finance leadership.',
+      averageSalary: '₹8,00,000 - ₹30,00,000',
+      jobGrowth: '14%',
+      content: {
+        overview:
+          'Finance managers oversee budgeting, reporting, financial controls and strategic financial planning. They ensure compliance, manage cash flow, and contribute to corporate strategy.',
+        skills: [
+          'Financial statement analysis',
+          'Budgeting & forecasting',
+          'Treasury & cash management',
+          'Risk management & controls',
+          'Excel & financial modelling'
+        ],
+        careerOptions: ['FP&A lead', 'Treasury manager', 'Finance controller', 'CFO (senior)'],
+        topRecruiters: ['Banks', 'Large corporates', 'finance consultancies'],
+        higherStudies: ['MBA (Finance)', 'CFA (for investment-oriented roles)'],
+        recommendedCertifications: ['CFA Level courses, financial modelling certificates'],
+        practicalTips:
+          'Hands-on exposure to reporting and budgeting processes and strong Excel skills accelerate growth in this track.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'BBA / relevant degree + internships', duration: '3-4 years', skills: ['accounting basics','excel'] }
+        ],
+        intermediate: [
+          { title: 'Financial analyst roles & MBA/CFA', duration: '2-5 years', skills: ['modelling','forecasting'] }
+        ],
+        advanced: [
+          { title: 'Finance leadership roles', duration: 'ongoing', skills: ['strategy','investor relations'] }
+        ]
+      }
+    },
+
+    'operations': {
+      title: 'Operations Manager',
+      description: 'Supply chain, logistics, production planning, process improvement and operational excellence.',
+      averageSalary: '₹7,00,000 - ₹22,00,000',
+      jobGrowth: '12%',
+      content: {
+        overview:
+          'Operations managers optimize processes across manufacturing and services — supply chain, procurement, production planning and quality control. Lean, Six Sigma and ERP familiarity are often required.',
+        skills: ['Supply chain & logistics', 'Process improvement (Lean/Six Sigma)', 'Inventory & vendor management', 'ERP tools', 'KPI & metrics tracking'],
+        careerOptions: ['Operations manager', 'Supply chain analyst', 'Production planner', 'Logistics head'],
+        topRecruiters: ['Manufacturing firms', 'eCommerce & logistics companies', 'consulting firms'],
+        higherStudies: ['MBA Operations', 'MTech in Systems/Operations Research'],
+        recommendedCertifications: ['Six Sigma, APICS certifications'],
+        practicalTips:
+          'Operational internships and exposure to ERP systems (SAP, Oracle) plus continuous improvement projects help build credibility.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Operational internships & entry-level roles', duration: '1-2 years', skills: ['ERP basics','process mapping'] }
+        ],
+        intermediate: [
+          { title: 'Process improvement projects & certifications', duration: '2-4 years', skills: ['lean','six sigma'] }
+        ],
+        advanced: [
+          { title: 'Head of operations / supply chain leadership', duration: 'ongoing', skills: ['cross-functional leadership','strategy'] }
+        ]
+      }
+    },
+
+    'consulting': {
+      title: 'Business Consultant',
+      description: 'Advisory on strategy, operations, transformation and process improvement for clients.',
+      averageSalary: '₹10,00,000 - ₹40,00,000+',
+      jobGrowth: '15%',
+      content: {
+        overview:
+          'Consultants advise organisations on strategy implementation, operational improvements and transformation projects. Strong problem solving, communication and client-management skills are central.',
+        skills: ['Problem structuring', 'Data-driven analysis', 'Presentation & story-telling', 'Project management', 'Stakeholder management'],
+        careerOptions: ['Management consultant', 'Strategy analyst', 'Operations consultant', 'Independent advisor'],
+        topRecruiters: ['Consulting firms (Big 4, strategy boutiques)', 'In-house strategy teams'],
+        higherStudies: ['MBA (top schools)', 'specialist masters (analytics, econ)'],
+        recommendedCertifications: ['Case interview prep, PMP for project management'],
+        practicalTips:
+          'Develop case solving, Excel and presentation skills; internships at consultancies are highly valued.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Analyst roles / internships & case prep', duration: '6-12 months', skills: ['case frameworks','quant skills'] }
+        ],
+        intermediate: [
+          { title: 'Consulting projects & specialization', duration: '2-5 years', skills: ['industry expertise','client handling'] }
+        ],
+        advanced: [
+          { title: 'Engagement lead / partner track', duration: 'ongoing', skills: ['business development','thought leadership'] }
+        ]
+      }
+    }
+  }
+},
+
+
+'design': {
+  title: 'Design (B.Des/M.Des)',
+  icon: 'pen-tool',
+  color: 'bg-gradient-to-r from-rose-500 to-fuchsia-700',
+  description: 'Creative design careers in UI/UX, fashion, interior, and product design.',
+  averageSalary: '₹3,00,000 - ₹18,00,000',
+  jobGrowth: '10%',
+  hasSubcategories: true,
+  subcategories: {
+    'uiux': {
+      title: 'UI/UX Designer',
+      description: 'Designing user interfaces and experiences for web and mobile products.',
+      averageSalary: '₹5,00,000 - ₹20,00,000',
+      jobGrowth: '15%',
+      content: {
+        overview:
+          'UI/UX designers focus on user research, interaction design, prototyping and usability testing to craft digital products that are intuitive and delightful. A strong portfolio and process-driven case studies are essential to get hired.',
+        skills: [
+          'User research & personas',
+          'Wireframing & prototyping (Figma/Sketch)',
+          'Interaction & visual design',
+          'Usability testing & iteration',
+          'Design systems & accessibility'
+        ],
+        careerOptions: ['Product designer', 'Interaction designer', 'UX researcher', 'Design lead'],
+        topRecruiters: ['Product companies', 'Startups', 'Design agencies', 'EdTech & FinTech firms'],
+        higherStudies: ['M.Des in Interaction Design', 'specialized UX programs'],
+        recommendedCertifications: ['UX research and prototyping workshops'],
+        practicalTips:
+          'Build a focused portfolio with case studies showing research, design decisions, prototyping and measurable impact.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Learn basics of UX/UI tools & design thinking', duration: '3-6 months', skills: ['Figma','wireframing','user research basics'] }
+        ],
+        intermediate: [
+          { title: 'Create projects & internships', duration: '6-12 months', skills: ['end-to-end case studies','usability testing'] }
+        ],
+        advanced: [
+          { title: 'Lead product design & design systems', duration: 'ongoing', skills: ['design ops','team leadership'] }
+        ]
+      }
+    },
+
+    'fashion': {
+      title: 'Fashion Designer',
+      description: 'Clothing design, textiles, trend forecasting and brand creation.',
+      averageSalary: '₹3,50,000 - ₹15,00,000',
+      jobGrowth: '9%',
+      content: {
+        overview:
+          'Fashion designers create clothing and accessory collections, understand fabric behaviour and manage the design-to-production pipeline. A strong creative voice and understanding of market & production constraints is key.',
+        skills: ['Sketching & illustration', 'Textile knowledge', 'Pattern making & draping', 'CAD for fashion', 'trend analysis'],
+        careerOptions: ['Apparel designer', 'fashion stylist', 'technical designer', 'brand founder'],
+        topRecruiters: ['Apparel brands', 'fashion houses', 'textile manufacturers', 'ecommerce fashion brands'],
+        higherStudies: ['M.Des in Fashion', 'specialized textile & merchandising programs'],
+        recommendedCertifications: ['CAD for fashion (CLO/Optitex), pattern-making courses'],
+        practicalTips:
+          'Build sample collections, understand manufacturing constraints and maintain a lookbook/portfolio.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Foundations in fashion design & textiles', duration: '6-12 months', skills: ['sketching','fabric basics'] }
+        ],
+        intermediate: [
+          { title: 'Design collections & internships with brands', duration: '1-2 years', skills: ['sample making','production'] }
+        ],
+        advanced: [
+          { title: 'Launch label / senior designer roles', duration: 'ongoing', skills: ['brand building','supply chain'] }
+        ]
+      }
+    },
+
+    'interior': {
+      title: 'Interior Designer',
+      description: 'Designing interior spaces, space planning, furniture and user-centered environments.',
+      averageSalary: '₹4,00,000 - ₹18,00,000',
+      jobGrowth: '10%',
+      content: {
+        overview:
+          'Interior designers plan functional and aesthetic interior spaces across residential, commercial and hospitality projects. Skills in spatial planning, materials, FF&E (furniture, fixtures, equipment) and client management are essential.',
+        skills: ['Space planning', '3D visualization (SketchUp, Revit)', 'materials & finishes knowledge', 'project management', 'client presentations'],
+        careerOptions: ['Interior designer', 'set designer', 'hospitality designer', 'design consultant'],
+        topRecruiters: ['Design studios', 'architect firms', 'hospitality chains', 'real estate developers'],
+        higherStudies: ['M.Des (Interior)', 'specialized diplomas in sustainable design'],
+        recommendedCertifications: ['Revit/Autodesk courses'],
+        practicalTips:
+          'Create a portfolio of before/after projects, and understand basic construction documents and contractor coordination.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Learn design fundamentals & visualization tools', duration: '6-12 months', skills: ['SketchUp','AutoCAD basics'] }
+        ],
+        intermediate: [
+          { title: 'Handle small projects & internships', duration: '1-3 years', skills: ['client coordination','site supervision'] }
+        ],
+        advanced: [
+          { title: 'Lead large projects / start studio', duration: 'ongoing', skills: ['project management','business development'] }
+        ]
+      }
+    },
+
+    'product': {
+      title: 'Product Designer',
+      description: 'Industrial and product design for physical products, considering usability, manufacturability and aesthetics.',
+      averageSalary: '₹6,00,000 - ₹22,00,000',
+      jobGrowth: '12%',
+      content: {
+        overview:
+          'Product designers create physical products balancing form, function and manufacturability. They combine user research, CAD modelling, prototyping and supplier collaboration to bring products to market.',
+        skills: ['Industrial design', 'CAD (SolidWorks, Rhino)', 'rapid prototyping', 'materials & manufacturing knowledge', 'user research'],
+        careerOptions: ['Industrial designer', 'product design engineer', 'R&D design', 'furniture/product brand lead'],
+        topRecruiters: ['Manufacturing firms', 'consumer product companies', 'design consultancies'],
+        higherStudies: ['M.Des in Product Design', 'specialized manufacturing courses'],
+        recommendedCertifications: ['CAD & prototyping workshops'],
+        practicalTips:
+          'Prototype frequently and document design iterations. Knowledge of manufacturing limitations (injection moulding, sheet metal) is important.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Design fundamentals & sketching', duration: '6-12 months', skills: ['ideation','CAD basics'] }
+        ],
+        intermediate: [
+          { title: 'Prototyping and production exposure', duration: '1-3 years', skills: ['CNC/3D printing','materials'] }
+        ],
+        advanced: [
+          { title: 'Lead product design & commercialization', duration: 'ongoing', skills: ['sourcing','product strategy'] }
+        ]
+      }
+    },
+
+    'animation': {
+      title: 'Animation & Multimedia',
+      description: '2D/3D animation, VFX, game art and multimedia production.',
+      averageSalary: '₹4,00,000 - ₹20,00,000',
+      jobGrowth: '14%',
+      content: {
+        overview:
+          'Animation and multimedia professionals create 2D/3D animated content for movies, advertising, games and digital media. Skills include storyboarding, modelling, rigging, texturing and compositing. A portfolio reel is critical for hiring.',
+        skills: ['Storyboarding', '3D modelling & rigging (Maya/Blender)', 'Texturing & lighting', 'Compositing & VFX', 'Game asset creation'],
+        careerOptions: ['3D artist', 'VFX compositor', 'game artist', 'animator'],
+        topRecruiters: ['Animation studios', 'gaming companies', 'advertising agencies', 'film production houses'],
+        higherStudies: ['MFA in Animation / specialized VFX courses'],
+        recommendedCertifications: ['Software-specific certifications (Maya, Houdini)'],
+        practicalTips:
+          'Build a showreel with short polished pieces; contribute to indie projects to gain credits.'
+      },
+      roadmap: {
+        beginner: [
+          { title: 'Learn fundamentals & software', duration: '6-12 months', skills: ['2D basics','Blender/Maya intro'] }
+        ],
+        intermediate: [
+          { title: 'Create portfolio projects & internships', duration: '1-2 years', skills: ['compositing','3D pipeline'] }
+        ],
+        advanced: [
+          { title: 'Work on studio pipeline & specialize', duration: 'ongoing', skills: ['lead artist roles','pipeline design'] }
+        ]
+      }
+    }
+  }
+}
+
+
+}
+
+    // State
+    let selectedCareer = null, selectedSubcategory = null, selectedLevel='beginner';
+
+    function renderBreadcrumb() {
+      const breadcrumb = document.getElementById('breadcrumb');
+      let html = `<button onclick="showCareers()" class="hover:text-blue-600">All Careers</button>`;
+      if(selectedCareer) {
+        html += ` <span>></span> `;
+        if(careers[selectedCareer].hasSubcategories && !selectedSubcategory) {
+          html += `<span class="text-gray-900">${careers[selectedCareer].title}</span>`;
+        } else {
+          html += `<button onclick="showSubcategories('${selectedCareer}')" class="hover:text-blue-600">${careers[selectedCareer].title}</button>`;
+        }
+      }
+      if(selectedSubcategory) {
+        html += ` <span>></span> <span class="text-gray-900">${careers[selectedCareer].subcategories[selectedSubcategory].title}</span>`;
+      }
+      breadcrumb.innerHTML = html;
+    }
+
+    function renderCareerCards() {
+      const container=document.getElementById('career-cards');
+      container.innerHTML='';
+      Object.entries(careers).forEach(([key,career])=>{
+        const card=document.createElement('div');
+        card.className='career-card cursor-pointer rounded-xl p-6 bg-white shadow-sm hover:shadow-md';
+        card.onclick=()=>selectCareer(key);
+        card.innerHTML=`
+          <div class="${career.color} w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="${career.icon}" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">${career.title}</h3>
+          <p class="text-gray-600 text-sm mb-4">${career.description}</p>
+          <div class="space-y-2 text-sm text-gray-500">
+            <div class="flex items-center"><i data-lucide="briefcase" class="w-4 h-4 mr-2"></i>${career.averageSalary}</div>
+            <div class="flex items-center"><i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>${career.jobGrowth}</div>
+          </div>
+          ${career.hasSubcategories?'<div class="mt-4 text-sm text-blue-600 font-medium">View Specializations →</div>':""}
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function selectCareer(key){
+      selectedCareer=key;
+      if(careers[key].hasSubcategories){ showSubcategories(key); }
+      else { selectedSubcategory=null; showRoadmap(); }
+    }
+    function showCareers(){
+      selectedCareer=null; selectedSubcategory=null;
+      document.getElementById('career-cards').style.display='grid';
+      document.getElementById('subcategory-section').style.display='none';
+      document.getElementById('career-details').style.display='none';
+      renderBreadcrumb(); renderCareerCards();
+    }
+    function showSubcategories(key){
+      selectedCareer=key; selectedSubcategory=null;
+      document.getElementById('career-cards').style.display='none';
+      document.getElementById('subcategory-section').style.display='block';
+      document.getElementById('career-details').style.display='none';
+      document.getElementById('subcategory-title').textContent=`Choose your ${careers[key].title} specialization`;
+      const container=document.getElementById('subcategory-cards');
+      container.innerHTML='';
+      Object.entries(careers[key].subcategories).forEach(([skey,sub])=>{
+        const card=document.createElement('div');
+        card.className='subcategory-card cursor-pointer rounded-lg p-4 bg-white border hover:border-blue-300';
+        card.onclick=()=>selectSubcategory(skey);
+        card.innerHTML=`
+          <h4 class="text-lg font-semibold text-gray-900 mb-2">${sub.title}</h4>
+          <p class="text-gray-600 text-sm mb-3">${sub.description}</p>
+          <div class="text-sm text-gray-500 space-y-1">
+            <div class="flex items-center"><i data-lucide="briefcase" class="w-4 h-4 mr-2"></i>${sub.averageSalary}</div>
+            <div class="flex items-center"><i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>${sub.jobGrowth}</div>
+          </div>`;
+        container.appendChild(card);
+      });
+      renderBreadcrumb(); lucide.createIcons();
+    }
+    function selectSubcategory(k){ selectedSubcategory=k; showRoadmap(); }
+    function showRoadmap(){
+      document.getElementById('career-cards').style.display='none';
+      document.getElementById('subcategory-section').style.display='none';
+      document.getElementById('career-details').style.display='block';
+      renderCareerDetails(); renderBreadcrumb();
+    }
+    function selectLevel(l){ selectedLevel=l; renderRoadmap(); }
+    function getCurrentCareerData(){ return selectedSubcategory?careers[selectedCareer].subcategories[selectedSubcategory]:careers[selectedCareer]; }
+
+    function renderCareerDetails(){
+      const current=getCurrentCareerData();
+      const details=document.getElementById('career-details');
+      details.innerHTML=`
+        <div class="flex items-center mb-6">
+          <div class="${careers[selectedCareer].color} w-16 h-16 rounded-xl flex items-center justify-center mr-6">
+            <i data-lucide="${careers[selectedCareer].icon}" class="w-8 h-8 text-white"></i>
+          </div>
+          <div>
+            <h2 class="text-3xl font-bold text-gray-900">${current.title}</h2>
+            <p class="text-gray-600">${current.description}</p>
+            <div class="mt-2 text-sm text-gray-500 flex space-x-4">
+              <span><i data-lucide="briefcase" class="w-4 h-4 mr-1"></i>${current.averageSalary||''}</span>
+              <span><i data-lucide="trending-up" class="w-4 h-4 mr-1"></i>${current.jobGrowth||''}</span>
+            </div>
+          </div>
+        </div>
+
+        ${current.content ? `
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Overview</h3>
+          <p class="text-gray-600 mb-4">${current.content.overview}</p>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Key Skills</h3>
+          <ul class="list-disc list-inside text-gray-600 mb-4">
+            ${current.content.skills.map(s=>`<li>${s}</li>`).join('')}
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Career Options</h3>
+          <ul class="list-disc list-inside text-gray-600 mb-4">
+            ${current.content.careerOptions.map(c=>`<li>${c}</li>`).join('')}
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Top Recruiters</h3>
+          <ul class="list-disc list-inside text-gray-600 mb-4">
+            ${current.content.topRecruiters.map(r=>`<li>${r}</li>`).join('')}
+          </ul>
+
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">Higher Studies</h3>
+          <ul class="list-disc list-inside text-gray-600 mb-4">
+            ${current.content.higherStudies.map(h=>`<li>${h}</li>`).join('')}
+          </ul>
+        </div>` : ''}
+
+        <div class="flex space-x-4 mb-6">
+          <button onclick="selectLevel('beginner')" class="px-4 py-2 rounded-lg text-sm font-medium ${selectedLevel==='beginner'?'bg-blue-600 text-white':'bg-gray-100 text-gray-600'}">Beginner</button>
+          <button onclick="selectLevel('intermediate')" class="px-4 py-2 rounded-lg text-sm font-medium ${selectedLevel==='intermediate'?'bg-blue-600 text-white':'bg-gray-100 text-gray-600'}">Intermediate</button>
+          <button onclick="selectLevel('advanced')" class="px-4 py-2 rounded-lg text-sm font-medium ${selectedLevel==='advanced'?'bg-blue-600 text-white':'bg-gray-100 text-gray-600'}">Advanced</button>
+        </div>
+        <div id="roadmap-timeline"></div>`;
+      renderRoadmap(); lucide.createIcons();
+    }
+
+    function renderRoadmap(){
+      const current=getCurrentCareerData();
+      const steps=current.roadmap && current.roadmap[selectedLevel]?current.roadmap[selectedLevel]:[];
+      const container=document.getElementById('roadmap-timeline');
+      if(!steps.length){ container.innerHTML='<p class="text-gray-500">Roadmap not yet defined for this specialization.</p>'; return;}
+      container.innerHTML=`<div class="roadmap-timeline">${steps.map(s=>`
+        <div class="timeline-item pl-8">
+          <h4 class="text-lg font-semibold text-gray-900">${s.title}</h4>
+          <p class="text-sm text-gray-500 mb-2">${s.duration}</p>
+          <div class="flex flex-wrap gap-2">
+            ${s.skills.map(skill=>`<span class="skill-tag bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full">${skill}</span>`).join('')}
+          </div>
+        </div>`).join('')}</div>`;
+    }
+
+    // Initial
+    renderCareerCards(); renderBreadcrumb();
+  </script>
+</body>
+</html>
